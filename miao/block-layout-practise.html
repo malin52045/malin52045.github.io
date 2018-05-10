@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+  <style>
+    .top{
+    background-color: black;
+    color:white;
+    }
+
+    ul,.pagebody{
+      width:600px;
+      margin-left:auto;
+      margin-right:auto;
+    }
+
+    p{
+      padding-left:calc(50% - 300px);
+      padding-right:calc(50% - 300px);
+    }
+
+    .list1{
+      padding-left:0px;
+    }
+
+    .list1>li{
+      list-style: none;
+      margin-top:15px;
+      border:3px solid;
+      background-color: pink;
+      width:180px;
+      height:40px;
+      box-sizing:border-box;
+    }
+
+    .list1>li:nth-child(n+5):nth-child(-n+8){
+      margin-left:210px;
+    }
+
+    .list1>li:nth-child(5){
+        margin-top: -205px
+    }
+
+    .list1>li:nth-child(9){
+      margin-top: -205px
+    }
+
+    .list1>li:nth-child(n+9){
+      margin-left:420px;
+    }
+
+    .list1>li:hover{
+      background-color: red;
+    }
+
+    .list2>li{
+      border-bottom:dotted 1px;
+      margin-bottom:-1px;
+    }
+
+    .list2{
+      overflow:hidden;
+    }
+
+    .root{
+      background-color: violet;
+    }
+
+    .root>div{
+      text-align:center
+    }
+  </style>
+</head>
+<body>
+  <div class="top">
+    <div class="contain"><p>hello world 请调整浏览器窗口大小查看效果</div></p>
+  </div>
+  <div class="pagebody">页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px 页面主体 宽度600px</div>
+  <ul class="list1">
+    <li>宽180高40(包含边框)</li>
+    <li>水平间隙30px</li>
+    <li>垂直间隙15px</li>
+    <li>边框宽度3px</li>
+    <li>产品</li>
+    <li>产品</li>
+    <li>产品</li>
+    <li>产品</li>
+    <li>产品</li>
+    <li>产品</li>
+    <li>产品</li>
+    <li>产品</li>
+  </ul>
+    <ul class="list2">
+      <li>link</li>
+      <li>link</li>
+      <li>link</li>
+      <li>link</li>
+      <li>link</li>
+    </ul>
+  <div class="root">
+    <div>©版权所有</div>
+    <div>本页所有布局均使用块元素</div>
+   </div>
+ </body>
+</html>
