@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+  <style>
+    .mail table{
+      width:100%;
+      xfont-size: 0px;
+    }
+    .mail table *{
+      xfont-size: 16px;
+    }
+
+    .mail td{
+      border:1px solid;
+      padding:0px;
+    }
+
+
+    .mail input{
+      border:0px black solid;
+      padding:0px;
+      height:100%;
+      width: 100%;
+      font: inherit;
+    }
+
+    xinput:focus{
+      border:1px black solid;
+    }
+    .mail .name{
+      text-align:center;
+    }
+
+
+
+    .table-bordered td,.table-bordered th{
+      border:1px solid rgb(226,226,230);
+      text-align:left;
+      padding:10px;
+    }
+
+    .table-bordered [scope="col"]{
+      border-bottom:2px solid rgb(226,226,230);
+    }
+
+    .table-bordered{
+      border-collapse: collapse;
+      width:100%;
+    }
+
+
+
+    .table-hover th,td{
+      border-top:solid 1px rgb(226,226,230);
+      text-align:left;
+      padding:10px;
+    }
+
+    .table-hover{
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    .table-hover [scope="col"]{
+      border-bottom:2px solid rgb(226,226,230);
+    }
+
+    .table-hover tbody tr:hover{
+      background-color: rgb(226,226,230);
+    }
+
+
+
+    .table-striped th,td{
+      border-top:solid 1px rgb(226,226,230);
+      text-align:left;
+      padding:10px;
+    }
+
+    .table-striped{
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    .table-striped tbody tr:nth-child(2n+1){
+      background-color: rgb(242,242,242);
+    }
+  </style>
+</head>
+<body>
+  <table class="mail">
+    <td  class="name">name</td>
+    <td><input type="text"></td>
+  </table>
+  <table  class="mail">
+    <td><input type="text"></td>
+    <td class="name">@example.com</td>
+  </table><br>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">First</th>
+        <th scope="col">Last</th>
+        <th scope="col">Handle</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">1</th>
+        <td>Mark</td>
+        <td>Otto</td>
+        <td>@mdo</td>
+      </tr>
+      <tr>
+        <th scope="row">2</th>
+        <td>Jacob</td>
+        <td>Thornton</td>
+        <td>@fat</td>
+      </tr>
+      <tr>
+        <th scope="row">3</th>
+        <td colspan="2">Larry the Bird</td>
+        <td>@twitter</td>
+      </tr>
+    </tbody>
+  </table><br>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">First</th>
+        <th scope="col">Last</th>
+        <th scope="col">Handle</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">1</th>
+        <td>Mark</td>
+        <td>Otto</td>
+        <td>@mdo</td>
+      </tr>
+      <tr>
+        <th scope="row">2</th>
+        <td>Jacob</td>
+        <td>Thornton</td>
+        <td>@fat</td>
+      </tr>
+      <tr>
+        <th scope="row">3</th>
+        <td colspan="2">Larry the Bird</td>
+        <td>@twitter</td>
+      </tr>
+    </tbody>
+  </table><br>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">First</th>
+        <th scope="col">Last</th>
+        <th scope="col">Handle</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">1</th>
+        <td>Mark</td>
+        <td>Otto</td>
+        <td>@mdo</td>
+      </tr>
+      <tr>
+        <th scope="row">2</th>
+        <td>Jacob</td>
+        <td>Thornton</td>
+        <td>@fat</td>
+      </tr>
+      <tr>
+        <th scope="row">3</th>
+        <td>Larry</td>
+        <td>the Bird</td>
+        <td>@twitter</td>
+      </tr>
+    </tbody>
+  </table>
+</body>
+</html>
