@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+  <style>
+    body{
+      margin:0;
+      font-size: 0px;
+    }
+
+    .item1-3top,.item1-2top,.item1-1top,.item1top{
+      width: 150px;
+      height: 50px;
+      xborder:2px solid Silver;
+    }
+
+    .useForPosition *{
+      background-color: gray;
+      color:white;
+    }
+
+    div{
+      font-size: 16px;
+      xline-height: 50px;
+      text-align:center;
+      width: 150px;
+      xheight: 50px;
+      xborder:2px solid Silver;
+      box-sizing:border-box;
+    }
+
+    .useForPosition{
+      xwidth: 100%;
+      xheight: 10000px;
+      position: relative;
+      xfont-size: 0px;
+    }
+
+    .item1top,.item2top,.item3top{
+      font-size: 30px;
+      font-weight: 600;
+      line-height: 50px;
+    }
+
+    /* item1内容格式 */
+
+    .item1-1top,.item1-2top,.item1-3top{
+      display: none;
+    }
+
+    /* item1-1内容格式 */
+
+    .item1-1-1top{
+      position: absolute;
+      left:150px;
+      top:50px;
+      height: 50px;
+      display: none;
+
+    }
+
+    .item1-1-2top{
+      position: absolute;
+      left:150px;
+      top:100px;
+      height: 50px;
+      display: none;
+
+    }
+
+    .item1-1-3top{
+      position: absolute;
+      left:150px;
+      top:150px;
+      height: 50px;
+      display: none;
+
+    }
+
+    /* item1-1-1内容格式 */
+
+    .item1-1-1-1{
+      position: absolute;
+      left:300px;
+      top:50px;
+      height: 50px;
+      display: none;
+    }
+
+    .item1-1-1-2{
+      position: absolute;
+      left:300px;
+      top:100px;
+      height: 50px;
+      display: none;
+    }
+
+    .item1-1-1-3{
+      position: absolute;
+      left:300px;
+      top:150px;
+      height: 50px;
+      display: none;
+    }
+
+    /* item1-1-2内容格式 */
+
+    .item1-1-2-1{
+      position: absolute;
+      left:300px;
+      top:100px;
+      height: 50px;
+      display: none;
+
+    }
+
+    .item1-1-2-2{
+      position: absolute;
+      left:300px;
+      top:150px;
+      height: 50px;
+      display: none;
+
+    }
+
+    .item1-1-2-3{
+      position: absolute;
+      left:300px;
+      top:200px;
+      height: 50px;
+      display: none;
+
+    }
+
+    /* item1-1-3内容格式 */
+
+    .item1-1-3-1{
+      position: absolute;
+      left:300px;
+      top:150px;
+      height: 50px;
+      display: none;
+    }
+
+    .item1-1-3-2{
+      position: absolute;
+      left:300px;
+      top:200px;
+      height: 50px;
+      display: none;
+
+    }
+
+    .item1-1-3-3{
+      position: absolute;
+      left:300px;
+      top:250px;
+      height: 50px;
+      display: none;
+    }
+
+    .item1-1-3-4{
+      position: absolute;
+      left:300px;
+      top:300px;
+      height: 50px;
+      display: none;
+    }
+
+    /* hover效果 */
+
+    .item1:hover .item1-1top,.item1:hover .item1-2top,.item1:hover .item1-3top{
+      display: block;
+    }                            /* item1内容显性化 */
+
+
+    .item1-1:hover>.item1-1top~div>.item1-1-1top,.item1-1:hover>div>*:first-child{
+      display: block;
+    }                             /*item1-1内容显性化 */                                                        
+
+    .item1-1-1:hover>.item1-1-1top~*,.item1-1-2:hover>.item1-1-2top~*,.item1-1-3:hover>.item1-1-3top~*{
+      display: block;
+    }                             /*item1-1-n内容显性化 */                                                        
+
+    /* hover颜色变化 */
+
+    .item1-3:hover>.item1-3top,.item1-1:hover>.item1-1top,.item1-2:hover>.item1-2top{
+      background-color: orange;
+    }                              /* item1内容hover颜色变化 */
+
+
+    .item1-1-3:hover>.item1-1-3top,.item1-1-2:hover>.item1-1-2top,.item1-1-1:hover>.item1-1-1top{
+      background-color: orange;
+    }                              /* item1-1内容hover颜色变化 */
+
+    [class^="item1-1-1-"]:hover{
+      background-color: orange;
+    }                               /* item1-1-1内容hover颜色变化 */
+
+    [class^="item1-1-2-"]:hover{
+      background-color: orange;
+    }                               /* item1-1-2内容hover颜色变化 */
+
+    [class^="item1-1-3-"]:hover{
+      background-color: orange;
+    }                               /* item1-1-3内容hover颜色变化 */
+
+
+
+
+
+
+
+
+
+
+
+    /* item1-2内容格式 */
+
+
+    .item1-2-1top{
+      position: absolute;
+      left:150px;
+      top:100px;
+      height: 50px;
+      display: none;
+
+    }
+
+    .item1-2-2top{
+      position: absolute;
+      left:150px;
+      top:150px;
+      height: 50px;
+      display: none;
+
+    }
+
+    .item1-2-3top{
+      position: absolute;
+      left:150px;
+      top:200px;
+      height: 50px;
+      display: none;
+
+    }
+
+    /* item1-2-1内容格式 */
+
+    .item1-2-1-1{
+      position: absolute;
+      left:300px;
+      top:100px;
+      height: 50px;
+      display: none;
+    }
+
+    .item1-2-1-2{
+      position: absolute;
+      left:300px;
+      top:150px;
+      height: 50px;
+      display: none;
+    }
+
+    .item1-2-1-3{
+      position: absolute;
+      left:300px;
+      top:200px;
+      height: 50px;
+      display: none;
+    }
+
+    /* item1-2-2内容格式 */
+
+    .item1-2-2-1{
+      position: absolute;
+      left:300px;
+      top:150px;
+      height: 50px;
+      display: none;
+
+    }
+
+    .item1-2-2-2{
+      position: absolute;
+      left:300px;
+      top:200px;
+      height: 50px;
+      display: none;
+
+    }
+
+    .item1-2-2-3{
+      position: absolute;
+      left:300px;
+      top:250px;
+      height: 50px;
+      display: none;
+
+    }
+
+    /* item1-2-3内容格式 */
+
+    .item1-2-3-1{
+      position: absolute;
+      left:300px;
+      top:200px;
+      height: 50px;
+      display: none;
+    }
+
+    .item1-2-3-2{
+      position: absolute;
+      left:300px;
+      top:250px;
+      height: 50px;
+      display: none;
+
+    }
+
+    .item1-2-3-3{
+      position: absolute;
+      left:300px;
+      top:300px;
+      height: 50px;
+      display: none;
+    }
+
+    .item1-2-3-4{
+      position: absolute;
+      left:300px;
+      top:350px;
+      height: 50px;
+      display: none;
+    }
+
+    /* item1-2hover效果 */
+
+
+    .item1-2:hover>.item1-2top~div>.item1-2-1top,.item1-2:hover>div>*:first-child{
+      display: block;
+    }                             /*item1-2内容显性化 */                                                        
+
+    .item1-2-1:hover>.item1-2-1top~*,.item1-2-2:hover>.item1-2-2top~*,.item1-2-3:hover>.item1-2-3top~*{
+      display: block;
+    }                             /*item1-2-n内容显性化 */                                                        
+
+    /* hover颜色变化 */
+
+
+
+    .item1-2-3:hover>.item1-2-3top,.item1-2-2:hover>.item1-2-2top,.item1-2-1:hover>.item1-2-1top{
+      background-color: orange;
+    }                              /* item1-2内容hover颜色变化 */
+
+    [class^="item1-2-1-"]:hover{
+      background-color: orange;
+    }                               /* item1-2-1内容hover颜色变化 */
+
+    [class^="item1-2-2-"]:hover{
+      background-color: orange;
+    }                               /* item1-2-2内容hover颜色变化 */
+
+    [class^="item1-2-3-"]:hover{
+      background-color: orange;
+    }                               /* item1-2-3内容hover颜色变化 */
+
+
+
+
+
+
+
+
+
+
+
+
+    /* item1-3内容格式 */
+
+
+    .item1-3-1top{
+      position: absolute;
+      left:150px;
+      top:150px;
+      height: 50px;
+      display: none;
+
+    }
+
+    .item1-3-2top{
+      position: absolute;
+      left:150px;
+      top:200px;
+      height: 50px;
+      display: none;
+
+    }
+
+    .item1-3-3top{
+      position: absolute;
+      left:150px;
+      top:250px;
+      height: 50px;
+      display: none;
+
+    }
+
+
+    /* item1-3hover效果 */
+
+    .item1-3:hover>.item1-3top~div>.item1-3-1top,.item1-3:hover>div>*:first-child{
+      display: block;
+    }                             /*item1-2内容显性化 */                                                        
+
+
+    /* hover颜色变化 */
+
+    .item1-3-3:hover>.item1-3-3top,.item1-3-2:hover>.item1-3-2top,.item1-3-1:hover>.item1-3-1top{
+      background-color: orange;
+    }                              /* item1-2内容hover颜色变化 */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /* item2内容格式 */
+
+    .item2top{
+      position: absolute;
+      left:150px;
+      top:0px;
+    }
+
+    .item2-1top{
+      display: none;
+      position: absolute;
+      left:0px;
+      top:50px;
+      width:500px;
+      height: 600px;
+      background-color:red;
+      font-size: 100px;
+      font-weight:800;
+    }
+
+
+    /* hover效果 */
+
+    .item2:hover .item2-1top{
+      display: block;
+    }                            /* item2内容显性化 */
+
+
+    /* hover颜色变化 */
+
+    .item2-1:hover>.item2-1top{
+      background-color: orange;
+    }                              /* item2内容hover颜色变化 */
+
+
+
+
+
+
+
+
+    /* item3内容格式 */
+
+    .item3top{
+      position: absolute;
+      left:300px;
+      top:0px;
+    }
+
+    .item3-1top{
+      display: none;
+      position: absolute;
+      left:0px;
+      top:50px;
+      width:800px;
+      height: 400px;
+      background-color:red;
+      font-size: 100px;
+      font-weight:800;
+    }
+
+
+    /* hover效果 */
+
+    .item3:hover .item3-1top{
+      display: block;
+    }                            /* item2内容显性化 */
+
+
+    /* hover颜色变化 */
+
+    .item3-1:hover>.item3-1top{
+      background-color: orange;
+    }   
+  </style>
+</head>
+<body>
+  <div class="useForPosition">
+        <div class="item1">
+          <div class="item1top">item1</div>
+          <div class="item1-1">
+            <div class="item1-1top">求你了，选我选我</div>
+            <div class="item1-1-1">
+              <div class="item1-1-1top">您可真乖</div>
+              <div class="item1-1-1-1">班上妹子今天穿的真像小仙女</div>
+              <div class="item1-1-1-2">别说了，妹子娶了我吧</div>
+              <div class="item1-1-1-3">富婆抱抱我，我不想努力了</div>         
+            </div>
+            <div class="item1-1-2">
+              <div class="item1-1-2top">来，宝宝吃面筋</div>
+              <div class="item1-1-2-1">说实话，少吃点面筋</div>
+              <div class="item1-1-2-2">一串烤面筋长50斤</div>
+              <div class="item1-1-2-3">富婆不喜欢吃烤面筋的小朋友</div>         
+            </div>
+            <div class="item1-1-3">
+              <div class="item1-1-3top">宝宝我就是饿死！也不会吃面筋</div>
+              <div class="item1-1-3-1">香香的口味~你吃过没？</div>
+              <div class="item1-1-3-2">辣辣的感觉~你尝过没</div>
+              <div class="item1-1-3-3">烤面筋，可带劲啦</div> 
+              <div class="item1-1-3-4" style="font-size:30px;font-weight:600">真香！</div>
+            </div>
+          </div>
+        
+          <div class="item1-2">
+            <div class="item1-2top">这也太难了，妈妈我想回家</div>
+            <div class="item1-2-1">
+              <div class="item1-2-1top">原来只有我是零基础</div>
+              <div class="item1-2-1-1">室友：今天不回来了</div>
+              <div class="item1-2-1-2">室友：忘记吃饭了</div>
+              <div class="item1-2-1-3">室友：我找到工作了</div>         
+            </div>
+            <div class="item1-2-2">
+              <div class="item1-2-2top">大佬求求你别学了，我跟不上了</div>
+              <div class="item1-2-2-1">大佬：这个我会</div>
+              <div class="item1-2-2-2">大佬：这个简单</div>
+              <div class="item1-2-2-3">大佬：我要去阿里</div>         
+            </div>
+            <div class="item1-2-3">
+              <div class="item1-2-3top"> <span style="text-decoration:line-through">CSS</span>CS真好玩</div>
+              <div class="item1-2-3-1">大吉大利，晚上吃鸡！</div>
+              <div class="item1-2-3-2">怎么可能，p5天下第一！</div>
+              <div class="item1-2-3-3">CN<span style="text-decoration:line-through">data</span><span style="text-decoration:line-through">doto</span>dota，Best dota!</div> 
+            </div>
+          </div>
+            
+          <div class="item1-3">
+            <div class="item1-3top">我是咸鱼，点我就骂你</div>
+            <div class="item1-3-1">
+              <div class="item1-3-1top">你是小猪！</div>
+            </div>
+            <div class="item1-3-2">
+              <div class="item1-3-2top">你是小狗！</div>
+            </div>
+            <div class="item1-3-3">
+              <div class="item1-3-3top">啊呸！</div>
+            </div>
+          </div>
+        </div>
+     
+        <div class="item2">
+          <div class="item2top">item2</div>
+          <div class="item2-1">
+            <div class="item2-1top">不写了，太麻烦了!!😭😭😭😭😭</div>
+          </div>
+        </div> 
+     
+        <div class="item3">
+          <div class="item3top">item3</div>
+          <div class="item3-1">
+            <div class="item3-1top">楼上说的对，所以请问怎么系统的设置通用格式</div>
+          </div> 
+        </div>
+  </div>
+  <main></main>
+</body>
+</html>

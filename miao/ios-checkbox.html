@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+  <style>
+    #check-button{
+      display: none;
+    }
+
+    .check-outbox{
+      display: block;
+      width: 400px;
+      height: 200px;
+      background-color: rgba(0,0,0,0.1);
+      border-radius:9999999px;
+      position: relative;
+    }
+
+    .check-smallLabel{
+      width: 390px;
+      height: 190px;
+      border-radius:9999999px;
+      background-color: #fff;
+
+      position: absolute;
+      top:5px;
+      left:5px;
+    }
+
+    .check-ball{
+      width: 190px;
+      height: 190px;
+      box-sizing:border-box;
+      background-color: #fff;
+      box-shadow:0px 8px 5px 5px rgba(0,0,0,0.04);
+      border:1px rgba(0,0,0,0.1) solid;
+      border-radius:9999999px;
+      position: absolute;
+      top:5px;
+      left:5px;
+      transition:width 0.3s cubic-bezier(.47,.83,.19,1.14),left 0.3s cubic-bezier(.47,.83,.19,1.14);
+    }
+
+    #check-button:active:not(:checked) + .check-outbox > .check-ball{
+      width:240px;
+    }
+
+    #check-button:active:checked + .check-outbox > .check-ball{
+      width:240px;
+      left:155px;
+    }
+
+    #check-button:active:not(:checked) + .check-outbox > .check-smallLabel{
+      width:250px;
+      height: 0px;
+      top:95px;
+      transition:width 0.2s linear,height 0.2s linear,top 0.2s linear;
+    }
+
+    #check-button:checked+.check-outbox>.check-ball{
+      left:205px;
+    }
+
+    #check-button:checked + .check-outbox{
+      background-color: lightgreen;
+    }
+
+    #check-button:checked+.check-outbox>.check-smallLabel{
+      display: none;
+    }
+  </style>
+</head>
+<body>
+<input type="checkbox" id="check-button" >
+<label for="check-button" class="check-outbox">
+  <div class="check-smallLabel"></div>
+  <div class="check-ball"></div>
+</label>
+</body>
+</html>

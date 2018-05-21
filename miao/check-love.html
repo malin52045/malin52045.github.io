@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+  <style>
+    .check-love{
+      box-sizing:border-box;
+      width: 100px;
+      height: 100px;
+      overflow:hidden;
+    }
+
+    input{
+      display: none;
+    }
+
+    img{
+      position: relative;
+      left:0px;
+    }
+
+    input:checked + label img{
+    left:-2800px;
+    transition:left 1s steps(28);
+    }
+  </style>
+</head>
+<body>
+  <div class="check-love">
+    <input type="checkbox" id="img"> 
+    <label for="img"><img src="https://abs.twimg.com/a/1526339738/img/animations/web_heart_animation_edge.png" alt="">
+    </label>
+  </div>
+</body>
+</html>
