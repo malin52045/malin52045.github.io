@@ -1,0 +1,46 @@
+
+<!-- test 1 一元二次方程解 -->
+<script type="">
+  var a=1
+  var b=4
+  var c=1
+
+  if(b ** 2 - 4 * a * c > 0){
+    console.log("x1="+((-b + (Math.sqrt(b ** 2 - 4 * a * c))) / (2 * a)))
+    console.log("x2="+((-b - (Math.sqrt(b ** 2 - 4 * a * c))) / (2 * a)))
+  }
+  else if(b ** 2 - 4 * a * c === 0){
+    console.log("x1=x2="+(-b / (2 * a)))
+  }
+  else {
+    var z1 = -b / (2 * a)
+    var z2 = Math.sqrt(4 * a * c - b ** 2)
+    console.log("x1="+z1+"+"+z2+"i")
+    console.log("x2="+z1+"-"+z2+"i")
+  }
+
+</script>
+
+
+<!-- test 2  二元一次方程解-->
+<script type="">
+  var a=1
+  var b=1
+  var c=1
+  var d=1
+  var e=1
+  var f=2
+
+  if(a * e - b * d !== 0){
+    console.log("x="+(c * e - b * f)/(a * e - b * d))
+    console.log("y="+(c * d - a * f)/(b * d - a * e))
+  }
+  else if(a * e - b * d === 0 && c * e - b * f !== 0){  //条件表达式中当ae-bs=0时，c * e - b * f == 0可以推导出cd-af=0价，所以只用写一个
+    console.log('无解')
+  }
+  else 
+    console.log('无数个解')
+
+  //条件语句中不能用分数表达式因为不能确定分母是否为0
+</script>
+
