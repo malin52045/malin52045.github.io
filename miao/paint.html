@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>画图</title>
+  <style>
+    canvas {
+      border: 2px solid #f0f;
+      display: block;
+      margin: auto;
+    }
+  </style>
+</head>
+<body>
+  <canvas width="400" height="300"></canvas>
+</body>
+<script>
+  var cvs = document.querySelector('canvas')
+  var ctx = cvs.getContext('2d')
+
+  function dot(x, y, color = 'black') {
+    ctx.fillStyle = color
+    ctx.fillRect(x, y, 1, 1)
+  }
+</script>
+<script>
+  //直线
+  for(var a = 50;a < 350;a++){
+    dot(a,30)
+  }
+  //点-空点 虚线
+  for(var a = 50;a < 350;a += 4){
+    dot(a,50)
+  } 
+  //点点-空点空点 虚线
+  for(var a = 50;a < 350;a += 4){
+    dot(a,70)
+    dot(a + 1,70)
+  }
+  //点点点-空空 虚线
+  for(var a = 50;a < 350;a += 5){
+    dot(a,90)
+    dot(a + 1,90)
+    dot(a + 2,90)
+  }
+  //45度斜线
+  for(var a = 150;a < 250;a++){
+    dot(a,a - 150)
+  }
+  //左上 右下对角线
+  for(var a = 0;a < 400;a++){
+    dot(a,0.75 * a)
+  }
+  //实心矩形
+  for(var a = 240;a < 290;a++){
+    for(var b = 110;b < 160;b++){
+      dot(a,b)
+    }
+  }
+  //实心色彩空间矩形
+  for(var a = 300;a < 350;a++){
+    for(var b = 150;b < 200;b++){
+
+      dot(a,b,'rgb(255,' + 255 * (199 - b) / 49 + ',' + 255 * (a - 300) / 49 + ')')
+    }
+  }
+  //空心圆1
+  for(var x = 50;x < 150;x++){
+    var y1 = 150 + Math.sqrt(50 ** 2 - (x - 100) ** 2)
+    var y2 = 150 - Math.sqrt(50 ** 2 - (x - 100) ** 2)
+    dot(x,y1)
+    dot(x,y2)
+    // dot(y1,x)
+    // dot(y2,x)//  当中心点x，y坐标一样时直接反转xy可以将圆以x=y对称翻转
+  } 
+  for(var y = 100;y < 200;y++){
+    var x1 = 100 + Math.sqrt(50 ** 2 - (y - 150) ** 2)
+    var x2 = 100 - Math.sqrt(50 ** 2 - (y - 150) ** 2)
+    dot(x1,y)
+    dot(x2,y) 
+  }
+
+  //空心圆2
+  for(var i = 0;i < 301; i++){
+    dot(50 + Math.sin(i / 300 * 2 * Math.PI) * 50, 50 + Math.cos(i / 300 * 2 * Math.PI) * 50)
+  }
+
+
+
+</script>
+</html>
