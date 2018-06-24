@@ -237,10 +237,10 @@
 </script>
 
 <script type="" id="ch0104/12">
-var distance = Number(prompt('请输入距离'))
-if (distance / 3 + 50 > distance / 1.2) console.log('Walk')
-  else if (distance / 3 + 50 === distance / 1.2) console.log('All')
-    else console.log('bike')
+  var distance = Number(prompt('请输入距离'))
+  if (distance / 3 + 50 > distance / 1.2) console.log('Walk')
+    else if (distance / 3 + 50 === distance / 1.2) console.log('All')
+      else console.log('bike') 
 </script>
 
 <script type="" id="ch0104/13">
@@ -375,3 +375,254 @@ if (distance / 3 + 50 > distance / 1.2) console.log('Walk')
     console.log(0)
   }
 </script>
+
+<script type="" id="ch0105/01">
+  var n = Number(prompt('请输入学生的人数'))
+  var sum = 0
+  for(var i = 0;i < n;i++){
+    sum += Number(prompt('请输入第' + (i + 1) + '名学生的年龄'))
+  }
+  console.log((sum / n).toFixed(2))
+</script>
+
+<script type="" id="ch0105/02">
+  var sum = 0
+  for(var i = 1;i <=12;i++){
+    sum += Number(prompt('输入第' + i + '个月的结余'))
+  }
+  console.log('$' + (sum / 12).toFixed(2))
+</script>
+
+<script type="" id="ch0105/03">
+  var n = Number(prompt('请输入样本容量'))
+  var sum = 0
+  for(var i = 0;i < n;i++){
+    sum += Number(prompt('请输入第' + (i + 1) + '个样本值'))
+  }
+  console.log((sum / n).toFixed(4))
+</script>
+
+<script type="" id="ch0105/04">
+  var n = Number(prompt('请输入整数的个数'))
+  var sum = 0
+  for(var i = 0;i < n;i++){
+    sum += Number(prompt('请输入第' + (i + 1)　+ '个整数的值'))
+  }
+  console.log(sum + "  " + (sum / n).toFixed(5))
+</script>
+
+<script type="" id="ch0105/05">
+  var n = Number(prompt('请输入参加考试的人数'))
+  var maxScore = 0
+  for(var i = 0;i < n;i++){
+    var onceScore = Number(prompt('请输入第' + (i + 1)　+ '个人的分数'))
+    if (onceScore > maxScore){
+      maxScore = onceScore
+    }
+  }
+  console.log(maxScore)
+</script>
+
+<script type="" id="ch0105/06">
+  var n = Number(prompt('请输入序列的长度'))
+  var maxScore = 1
+  var minScore = 1000
+  for(var i = 0;i < n;i++){
+    var onceScore = Number(prompt('请输入第' + (i + 1)　+ '列的数值'))
+    if (onceScore > maxScore){
+      maxScore = onceScore
+    }
+    if (onceScore < minScore){
+      minScore = onceScore
+    }
+  }
+  console.log(maxScore - minScore)
+</script>
+
+<script type="" id="ch0105/07">
+  var n = Number(prompt('请输入决赛项目的天数'))
+  var sumGoldMedal = 0
+  var sumSilverMedal = 0
+  var sumBronzeMedal = 0
+  for(var i = 0;i < n;i++){
+    sumGoldMedal += Number(prompt('请输入第' + (i + 1)　+ '天获得的金牌数目'))
+    sumSilverMedal += Number(prompt('请输入第' + (i + 1)　+ '天获得的银牌数目'))
+    sumBronzeMedal += Number(prompt('请输入第' + (i + 1)　+ '天获得的铜牌数目'))
+  }
+  console.log(sumGoldMedal,sumSilverMedal,sumBronzeMedal,sumGoldMedal + sumSilverMedal + sumBronzeMedal)
+</script>
+
+<script type="" id="ch0105/08">
+  var n = Number(prompt('请输入为几边形'))
+  var sumDeg = 0
+  for(var i = 0;i < n - 1;i++){
+    sumDeg += Number(prompt('请输入第' + (i + 1) + '个内角的角度'))
+  }
+  console.log((n - 2) * 180 - sumDeg)
+</script>
+
+<script type="" id="ch0105/09">
+  var m = Number(prompt('请输入m的值'))
+  var n = Number(prompt('请输入n的值'))
+  var sum = 0
+  for(;m <= n ;m++){
+    if (m % 2 !== 0){
+      sum += m 
+    }
+  }
+  console.log(sum)
+</script>
+
+<script type="" id="ch0105/10">
+  var m = Number(prompt('请输入m的值'))
+  var n = Number(prompt('请输入n的值'))
+  var sum = 0
+  for(;m <= n ;m++){
+    if (m % 17 === 0){
+      sum += m 
+    }
+  }
+  console.log(sum)
+</script>
+
+<script type="" id="ch0105/11">
+  var k = Number(prompt('请输入k的值'))
+  var sum1 = 0
+  var sum5 = 0
+  var sum10 = 0
+  for(var i = 0;i < k ;i++){
+    var number = Number(prompt('请输入第' + (i + 1) + '个数的值'))
+    if (number === 1){
+      sum1++ 
+    }else if (number === 5){
+      sum5++
+    }else if (number === 10){
+      sum10++
+    }
+  }
+  console.log(sum1)
+  console.log(sum5)
+  console.log(sum10)
+</script>
+
+<script type="" id="ch0105/12">
+  var n = Number(prompt('请输入序列的长度'))
+  var m = Number(prompt('请输入指定的数字'))
+  var sum = 0
+  for(var i = 0;i < n ;i++){
+    var onceNumber = Number(prompt('请输入第' + (i + 1) + '个数的值'))
+    if (onceNumber === m){
+       sum++
+    }
+  }
+  console.log(sum)
+</script>
+
+<script type="" id="ch0105/13">
+  var a = Number(prompt('请输入整数a'))
+  var n = Number(prompt('请输入整数n'))
+  console.log(a ** n)
+</script>
+
+<script type="" id="ch0105/14">
+  var x = Number(prompt('请输入人口基数x'))
+  var n = Number(prompt('请输入年数'))
+  console.log((x * 1.001 ** n).toFixed(4))
+</script>
+
+<script type="" id="ch0105/15">
+  var R = Number(prompt('请输入符合年利率R'))
+  var M = Number(prompt('请输入约翰的资产M'))
+  var Y = Number(prompt('请输入投资的年数'))
+  console.log(Math.floor(M * (1 + R * 0.01) ** Y))
+</script>
+
+<script type="" id="ch0105/16">
+  var N = Number(prompt('请输入年薪'))
+  var K = Number(prompt('请输入房子每年增长百分比'))
+  for(var i =1;i <= 21;i++){
+    if (N * i >= 200 * (1 + K * 0.01) ** i && i !==21){
+      console.log(i)
+      break
+    }
+    if (i === 21) {
+      console.log('Impossible')
+    }
+  }
+</script>
+
+<script type="" id="ch0105/17">
+  var k = Number(prompt('请输入正整数k'))
+  var number1 = 1
+  var number2 = 1
+  var number
+  if (k > 2){
+    for(var i = 0;i < k - 2;i++){
+      number = number1 + number2
+      number1 = number2
+      number2 = number
+    }
+    console.log(number)
+  }else if (k === 1 || k === 2){
+    console.log(1)
+</script>
+
+<script type="" id="ch0105/18">
+  var n = Number(prompt('请输入疗法的总数（包括鸡尾酒疗法）'))
+  var effect = 1 / Number(prompt('请输入鸡尾酒疗法的总病例数')) * Number(prompt('请输入鸡尾酒疗法的有效病例数'))
+  var effectString = ""
+  for(var i = 1;i < n;i++){
+    effectChange = 1 / Number(prompt('请输入改进疗法的总病例数')) * Number(prompt('请输入改进疗法的有效病例数'))
+    if (effectChange - effect > 0.05){
+      effectString +=  'better\n'
+    }else if (effectChange - effect < -0.05){
+      effectString += 'worse\n'
+    }else {
+      effectString += 'same\n'
+    }
+  }
+  console.log(effectString) 
+</script>
+
+<script type="" id="ch0105/19">
+  var n = Number(prompt('请输入屋顶数'))
+  var sumTime = 0
+  for(var i = 0;i < n;i++){
+    var x = Number(prompt('请输入第' + (i + 1) + '个屋顶坐标第一个值'))
+    var y = Number(prompt('请输入第' + (i + 1) + '个屋顶坐标第二个值'))
+    var personNumber = Number(prompt('请输入第' + (i + 1) + '个屋顶的人数'))
+    var oneTime = Math.sqrt(x ** 2 + y ** 2) / 50 * 2 + personNumber * 1.5
+    sumTime += oneTime
+  } 
+  console.log(Math.ceil(sumTime)) 
+</script>
+
+<script type="" id="ch0105/20">
+  var h = Number(prompt('请输入球初始高度'))
+  var s = 0
+  var hjump = h
+  for(var i = 0;i < 10;i++){
+    s += hjump * 2
+    hjump = hjump / 2
+  } 
+  console.log(s - h)
+  console.log(hjump) 
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
