@@ -615,6 +615,258 @@
 
 
 
+<script type="x" id="sort" sample-input="4 1 7" sample-output="1 4 7" comment="输入三个数，把此三个数按升序输出">
+  var a = Number(prompt('请输入第一个数'))
+  var b = Number(prompt('请输入第二个数'))
+  var c = Number(prompt('请输入第三个数'))
+  var change
+  if(b < a){
+    change = b
+    b = a
+    a = change 
+  }
+  if(c < a){
+    change = c
+    c = b
+    b = a
+    a = change
+  }else if(c < b){
+    change = c
+    c = b
+    b = change
+  }
+  console.log(a,b,c)
+</script>
+
+<script type="x" id="narcissistic " sample-input="153" sample-output="YES" comment="判断一个数是否为水仙花数">
+  var number = Number(prompt('请输入一个数'))
+  var length
+  var eachNumber
+  var sum = 0
+  length = number.toString().length
+  for(var n = 1;n <= length;n++){
+    eachNumber = parseInt(number / (10 ** (n - 1))) - parseInt(number / (10 ** n)) * 10
+    sum += eachNumber ** length
+  }
+  if(sum == number){
+    console.log('YES')
+  } else {
+    console.log('NO')
+  }
+</script>
+
+<script type="x" id="narcissistics" sample-input="" sample-output="" comment="找出100到10000以内所有的水仙花数">
+  var length
+  var eachNumber
+  for(var i = 100;i <100000;i++){
+    var sum = 0
+    if (i >= 100 && i < 1000){
+      length = 3
+    }
+    if (i >= 1000 && i < 10000){
+      length = 4
+    }
+    if (i >= 10000 && i < 100000){
+      length = 5
+    }
+    for(var n = 1;n < 6;n++){
+      eachNumber = parseInt(i / (10 ** (n - 1))) - parseInt(i / (10 ** n)) * 10
+      sum += eachNumber ** length
+    }
+    if(sum == i){
+      console.log(sum)
+    } 
+  }
+</script>
+
+<script type="x" id="palindrom" sample-input="12321" sample-output="YES" comment="判断一个非负整数是否为回文数字">
+  var number = Number(prompt('请输入一个用于判断是否为回文数的数'))
+  length = number.toString().length
+  for(i = 1;i <= length / 2;i++){
+    if(parseInt(number / (10 ** (i - 1))) % 10 == parseInt(number / (10 ** ( length - i))) % 10){
+      console.log('YES')
+    }else console.log('NO')
+  }
+</script>
+
+<script type="x" id="weekday" sample-input="2018 6" sample-output="5" comment="输入年份与月份，给出该年该月的第一天是星期几">
+  var year = Number(prompt('年份'))
+  var month = Number(prompt('月份'))
+  var day = Number(prompt('第几天'))
+  var sumDay = 0
+  for(var i = 2000;i < year;i++){
+    if(i % 400 === 0 || (i % 4 === 0 && i % 100 !== 0)){
+      sumDay += 366 
+    }else{
+      sumDay += 365
+    }  //年天数计算
+  }
+
+  if(year % 400 === 0 || (year % 4 === 0 && year % 100 !== 0)){  //闰年月份天数计算
+    for(var i = 1;i < month;i++){
+      if(i === 2){
+        sumDay += 29
+      }else if(i === 2 || i === 4 || i === 6 || i === 9 || i === 11){
+        sumDay += 30
+      }else {   
+        sumDay += 31
+      }
+    }
+  }else {   //非闰年天数计算
+    for(var i = 1;i < month;i++){
+      if(i === 2){
+        sumDay += 28
+      }else if(i === 2 || i === 4 || i === 6 || i === 9 || i === 11){
+        sumDay += 30
+      }else {   
+        sumDay += 31
+      }
+    }
+  } 
+  
+  sumDay += day   //第几天的天数计算
+
+  if (sumDay % 7 === 1){
+    console.log('周六')
+  }else if (sumDay % 7 === 2){
+    console.log('周日')
+  }else if (sumDay % 7 === 3){
+    console.log('周一')
+  }else if (sumDay % 7 === 4){
+    console.log('周二')
+  }else if (sumDay % 7 === 5){
+    console.log('周三')
+  }else if (sumDay % 7 === 6){
+    console.log('周四')
+  }else if (sumDay % 7 === 0){
+    console.log('周五')
+  }
+</script>
+
+<script type="x" id="complete-number" sample-input="6" sample-output="YES" comment="判断一个数是否为完全数">
+  var number = Number(prompt('请输入一个数用于判断是否为完全数'))
+  var sum = 0
+  for(var i = 1;i <= number / 2;i++){
+    if(number % i === 0){
+      sum += i
+    }  
+  }
+  if(sum === number){
+    console.log('YES')
+  }else console.log('NO')
+</script>
+
+<script type="x" id="complete-numbers" sample-input="" sample-output="" comment="输出10000以内所有的完全数">
+  for(var n = 1;n<= 10000;n++){
+    var sum = 0
+    for(var i = 1;i <= n / 2;i++){
+      if(n % i === 0){
+        sum += i
+      }  
+    }
+    if(sum === n){
+      console.log(n)
+    }
+  }
+</script>
+
+<script type="x" id="prime" sample-input="7" sample-output="YES" comment="判断一个数是否为素数">
+  var number = Number(prompt('请输入一个数用于判断是否为素数'))
+  var sum = 0
+  for(var i = 2;i <= Math.sqrt(number);i++){
+    if (number % i === 0){
+        sum++
+    }
+  }
+  if (sum === 0){
+    console.log('YES')
+  }else console.log('NO')
+</script>
+
+<script type="x" id="primes" sample-input="" sample-output="" comment="输出100以内所有的素数">
+  for(var n = 1;n <= 100;n++){
+    var sum = 0
+    for(var i = 2;i <= Math.sqrt(n);i++){
+      if (n % i === 0){
+          sum++
+      }
+    }
+    if (sum === 0){
+      console.log(n)
+    }
+  }
+</script>
+
+<script type="x" id="itob" sample-input="123" sample-output="123" comment="数字转换成字符串">
+  var number = Number(prompt('请输入需要转换成字符串的数字'))
+  var length  
+  var a
+  var remainder
+  var string = ''
+  for(var i = 1;;i++){
+    a = parseInt(number / 10 ** (i - 1))
+    if (a === 0) {
+      break
+    }
+    remainder = a % 10 
+    string = remainder + string
+  }
+  console.log(string)
+</script> 
+
+<script type="x" id="lcf&lcm" sample-input="12 9" sample-output="36 3" comment="给定两个数，求它们的最小公倍数和最大公约数">
+  var number1 = Number(prompt('请输入第一个数'))
+  var number2 = Number(prompt('请输入第二个数'))
+  var maxDivide = 0
+  for(var i = 1;i <= number1;i++){
+    if (number1 % i === 0) {
+      for(var n = 1;n <= number2;n++){
+        if (number2 % n === 0){
+          if (i === n){
+            if (i > maxDivide){
+              maxDivide = i
+              break
+            }
+          }
+        }
+      }
+    }
+  }
+  console.log('最大公约数为：' + maxDivide)
+
+  for(var i = 1;i <= number2;i++ ){
+    var multiply = number1 * i
+    for (var n = 1;n <= number1;n++){
+      if (multiply === number2 * n) break
+    } 
+    if (multiply === number2 * n) break
+  }
+  console.log('最小公倍数为：' + multiply)
+</script>
+
+<script type="x" id="7" sample-input="" sample-output="" comment="敲7">
+  for(var i = 1;i <= 100;i++){
+    if (i % 7 === 0 || i % 10 === 7 || parseInt(i / 10) % 10 === 7) console.log(i)
+  }
+</script>
+
+<script type="x" id="sqrt" sample-input="2" sample-output="1.414" comment="不使用Math.sqrt，求一个非负数的平方根，至少精确到小数点后3位">
+  var number = Number(prompt('请输入一个非负数'))
+  if (number >= 1){
+    for(var i = 1;i <= number;i += 0.0001){
+      if (i - number / i <= 0.0001 && i  - number / i >= -0.0001){
+        console.log((i).toFixed(3))
+      }
+    }
+  }else if (number >= 0)
+  for(var i = number;i < 1;i += 0.0001){
+    if (i * i - number <= 0.0001 * i && i * i  - number >= -0.0001 * i){
+      console.log((i).toFixed(3))
+    }
+  }
+</script>
+ 
+
 
 
 
