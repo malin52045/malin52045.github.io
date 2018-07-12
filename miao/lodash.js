@@ -80,7 +80,9 @@ var malin52045 = function(){
 
   return {
     chunk: chunk,
-
+    concat: concat,
+    difference: difference,
+    differenceBy : differenceBy
   }
 
 
