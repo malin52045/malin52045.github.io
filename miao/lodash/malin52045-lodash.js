@@ -48,7 +48,7 @@ var malin52045 = function(){
     // }
     for(let i = 0;i < array1.length;i++){
       // if(!(array1[i] in obj2)) result.push(array1[i])
-      if(array2.indexOf(array1[i] == -1) result.push(array1[i])
+      if(array2.indexOf(array1[i]) == -1) result.push(array1[i])
     }
     return result
   }

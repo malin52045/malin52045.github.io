@@ -888,7 +888,24 @@
 
 
 
-
+var selfDividingNumbers = function(left, right) {
+    function selfDividingNumber(n){
+        let digit
+        let m = n
+        do{
+            digit = m % 10
+            m = m / 10 | 0
+            if(n % digit != 0) return false
+        }while(m > 0)
+        return true
+    }
+    
+    let nums = []
+    for(let i = left;i <= right;i++){
+        if(selfDividingNumber(i))  nums.push(selfDividingNumber(i)) 
+    }
+    return nums
+};
 
 
 
