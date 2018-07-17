@@ -8,7 +8,7 @@ var malin52045 = function(){
     for(let i = 0;i < array.length;i++){
       let n = i % size
       temp.push(array[i])
-      if(n == size - 1){
+      if(n == size - 1){ 
         result.push(temp)
         temp = []
       }
@@ -474,7 +474,7 @@ var malin52045 = function(){
 
   //返回一个与参数函数 return相反的函数
   function negate(pre){
-    reture function(...arg){
+    return function(...arg){
       return !pre(...arg)
     }
   }
