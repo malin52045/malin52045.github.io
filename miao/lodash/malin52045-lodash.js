@@ -332,7 +332,7 @@ var malin52045 = function(){
   }
 
   //返回数组内某条件和
-  function sumBy(array,ident){
+  function sumBy(ary,ident){
     let sum = 0
     if(arguments.length === 1) sum(ary)
     if(typeof ident == 'function'){
