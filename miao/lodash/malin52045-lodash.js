@@ -338,11 +338,11 @@ var malin52045 = function(){
     if(typeof ident == 'function'){
       ary.forEach(function(temp){
         sum += ident(temp)      
-      }
-    }else if(typeof ident == 'string'){
+      })
+    }else if(typeof ident === 'string'){
       ary.forEach(function(temp){
         sum += temp[ident]
-      })
+      }
     }
     return sum
   }
