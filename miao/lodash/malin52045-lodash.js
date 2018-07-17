@@ -496,30 +496,7 @@ var malin52045 = function(){
   function isPrime(){}
   function 最大公约数(){}
   function 大整数相加(){}
-  function n-m之间的素数(){}
-  function 求数组最大项(){}
-  function 1-n的和(){}
-  function 1-n以内的完全数(){}
-  function abc排序(){}
-  function fibb(){}
-  function m的n次方(){}
-  function Sin-Taylor(){}
-  function 第一次只出现一次的字符(){}
-  function 反向输出一个三位数(){}
-  function 分解质因数(){}
-  function 猴子选王(){}
-  function 评委打分(){}
-  function 敲7(){}
-  function 求平方根(){}
-  function 日历(){}
-  function 四舍五入(){}
-  function 向量点积(){}
-  function 字符串展开(){}
-  function 最小公倍数(){}
-  function 最小的能被1-n整除的数(){}
-
-
-
+  
 
 
 
@@ -783,29 +760,7 @@ var malin52045 = function(){
     parseJson: parseJson,
     dellTo3355: dellTo3355,
     isPrime: isPrime,
-    最大公约数: 最大公约数,
-    大整数相加: 大整数相加,
-    n-m之间的素数: n-m之间的素数,
-    求数组最大项: 求数组最大项,
-    1-n的和: 1-n的和,
-    1-n以内的完全数: 1-n以内的完全数,
-    abc排序: abc排序,
-    fibb: fibb,
-    m的n次方: m的n次方,
-    Sin-Taylor: Sin-Taylor,
-    第一次只出现一次的字符: 第一次只出现一次的字符,
-    反向输出一个三位数: 反向输出一个三位数,
-    分解质因数: 分解质因数,
-    猴子选王: 猴子选王,
-    评委打分: 评委打分,
-    敲7: 敲7,
-    求平方根: 求平方根,
-    日历: 日历,
-    四舍五入: 四舍五入,
-    向量点积: 向量点积,
-    字符串展开: 字符串展开,
-    最小公倍数: 最小公倍数,
-    最小的能被1-n整除的数: 最小的能被1-n整除的数,
+
   }
 
 
