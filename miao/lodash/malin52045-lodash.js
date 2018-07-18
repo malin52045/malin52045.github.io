@@ -60,17 +60,18 @@ var malin52045 = function(){
   }
 
 
-  // 找出附一个数组中不同于第二个数组的值，返回一个新的数组
-  function difference(array1,array2){
+  // 找出第一个数组中不同于后面所有数组的值，返回一个新的数组
+  function difference(array1,...arys){
     if(arguments.length == 1) return Array.from(array1)
-    let result = []
-    // let obj2 = {}
-    // for(let i in array2){
-    //   obj2[array2[i]] = 1
-    // }
-    for(let i = 0;i < array1.length;i++){
-      // if(!(array1[i] in obj2)) result.push(array1[i])
-      if(array2.indexOf(array1[i]) == -1) result.push(array1[i])
+    let temp = array1
+    let result 
+    for(let ary of arys){
+      result = []
+      for(let i = 0;i < ary.length;i++){
+        // if(!(array1[i] in obj2)) result.push(array1[i])
+        if(ary.indexOf(temp[i]) == -1) result.push(temp[i])
+      }
+      temp = result      
     }
     return result
   }
@@ -106,7 +107,18 @@ var malin52045 = function(){
   }
 
 
-  //function differenceWith(){}
+  function differenceWith(ary1,ary2,comparator){
+    return ary1.filter(function(item){
+      for(let i of ary2){
+        if(comparator(i,item)) return true
+      }
+      return false
+    })
+  }
+
+  function differenceWith(ary1,ary2,comparator){
+    return ary1.filter(item => !ary2.some( item2 => comparator(item,item2)))
+  }
 
 
 
@@ -266,61 +278,12 @@ var malin52045 = function(){
       if(nums1.length !== nums2.length) return false
       for(let i of nums1){
         if(!(i in val2)) return false
-        if(!(isEqual(val1[i].val2[i]))) return false
+        if(!(isEqual(val1[i],val2[i]))) return false
       }
       return true
     }
+    return false
   }
-
-
-  function isEqualWith(){}
-  function isError(){}
-  function isFinite(){}
-  function isFunction(){}
-  function isInteger(){}
-  function isLength(){}
-  function isMap(){}
-  function isMatch(){}
-  function isMatchWith(){}
-  function isNaN(){}
-  function isNative(){}
-  function isNil(){}
-  function isNull(){}
-  function isNumber(){}
-  function isObject(){}
-  function isObjectLike(){}
-  function isPlainObject(){}
-  function isRegExp(){}
-  function isSafeInteger(){}
-  function isSet(){}
-  function isString(){}
-  function isSymbol(){}
-  function isTypedArray(){}
-  function isUndefined(){}
-  function isWeakMap(){}
-  function isWeakSet(){}
-  function lt(){}
-  function lte(){}
-  function toArray(){}
-  function toFinite(){}
-  function toInteger(){}
-  function toLength(){}
-  function toNumber(){}
-  function assign(){}
-  function toSafeInteger(){}
-  function add(){}
-  function ceil(){}
-  function divide(){}
-  function floor(){}
-  function max(){}
-  function maxBy(){}
-  function mean(){}
-  function meanBy(){}
-  function min(){}
-  function minBy(){}
-  function multiply(){}
-  function round(){}
-  function subtract(){}
 
   //返回数组和
   function sum(ary){
@@ -346,80 +309,6 @@ var malin52045 = function(){
     }
     return sum
   }
-
-  function clamp(){}
-  function inRange(){}
-  function random(){}
-  function assignIn(){}
-  function at(){}
-  function defaults(){}
-  function defaultsDeep(){}
-  function findKey(){}
-  function findLastKey(){}
-  function forIn(){}
-  function forInRight(){}
-  function forOwn(){}
-  function forOwnRight(){}
-  function functions(){}
-  function functionsIn(){}
-  function get(){}
-  function has(){}
-  function hasIn(){}
-  function invert(){}
-  function invertBy(){}
-  function invoke(){}
-  function keys(){}
-  function keysIn(){}
-  function mapKeys(){}
-  function mapValues(){}
-  function merge(){}
-  function mergeWith(){}
-  function omit(){}
-  function omitBy(){}
-  function pick(){}
-  function pickBy(){}
-  function result(){}
-  function set(){}
-  function setWith(){}
-  function toPairs(){}
-  function toPairsIn(){}
-  function transform(){}
-  function unset(){}
-  function update(){}
-  function updateWith(){}
-  function values(){}
-  function valuesIn(){}
-  function camelCase(){}
-  function capitalize(){}
-  function deburr(){}
-  function endsWith(){}
-  function escape(){}
-  function escapeRegExp(){}
-  function kebabCase(){}
-  function lowerCase(){}
-  function lowerFirst(){}
-  function pad(){}
-  function padEnd(){}
-  function padStart(){}
-  function parseInt(){}
-  function repeat(){}
-  function replace(){}
-  function snakeCase(){}
-  function split(){}
-  function startCase(){}
-  function startsWith(){}
-  function toLower(){}
-  function toUpper(){}
-  function trim(){}
-  function trimEnd(){}
-  function trimStart(){}
-  function truncate(){}
-  function unescape(){}
-  function upperCase(){}
-  function upperFirst(){}
-  function words(){}
-  function bindAll(){}
-  function defaultTo(){}
 
   //按步骤返回start到end之间的值
   function range(start,end,step = 1){
@@ -459,19 +348,6 @@ var malin52045 = function(){
     return result
   }
 
-
-  function mixin(){}
-  function times(){}
-  function toPath(){}
-  function uniqueId(){}
-  function cloneDeep(){}
-  function identity(){}
-  function pullAt(){}
-  function matches(){}
-  function property(){}
-  function ary(){}
-  function unary(){}
-
   //返回一个与参数函数 return相反的函数
   function negate(pre){
     return function(...arg){
@@ -480,23 +356,6 @@ var malin52045 = function(){
   }
   var negate = pre => (...arg) => !pre(...arg)
 
-  function once(){}
-  function spread(){}
-  function flip(){}
-  function conforms(){}
-  function constant(){}
-  function flow(){}
-  function method(){}
-  function methodOf(){}
-  function nthArg(){}
-  function propertyOf(){}
-  function arrayToLinkedList(){}
-  function parseJson(){}
-  function dellTo3355(){}
-  function isPrime(){}
-  function 最大公约数(){}
-  function 大整数相加(){}
-  
 
 
 
@@ -511,255 +370,17 @@ var malin52045 = function(){
     compact: compact,
     concat: concat,
     difference: difference,
-    differenceBy : differenceBy,
+    differenceBy: differenceBy,
+    differenceWith: differenceWith,
     drop: drop,
     dropRight: dropRight,
     dropRightWhile: dropRightWhile,
-    fill: fill,
-    findIndex: findIndex,
-    findLastIndex: findLastIndex,
-    flatten: flatten,
-    flattenDeep: flattenDeep,
-    flattenDepth: flattenDepth,
-    fromPairs: fromPairs,
-    head: head,
-    indexOf: indexOf,
-    initial: initial,
-    intersection: intersection,
-    intersectionBy: intersectionBy,
-    intersectionWith: intersectionWith,
-    join: join,
-    last: last,
-    lastIndexOf: lastIndexOf,
-    nth: nth,
-    pull: pull,
-    pullAll: pullAll,
-    pullAllBy: pullAllBy,
-    pullAllWith: pullAllWith,
-    reverse: reverse,
-    sortedIndex: sortedIndex,
-    sortedIndexBy: sortedIndexBy,
-    sortedIndexOf: sortedIndexOf,
-    sortedLastIndex: sortedLastIndex,
-    sortedLastIndexBy: sortedLastIndexBy,
-    sortedLastIndexOf: sortedLastIndexOf,
-    sortedUniq: sortedUniq,
-    sortedUniqBy: sortedUniqBy,
-    tail: tail,
-    take: take,
-    takeRight: takeRight,
-    takeRightWhile: takeRightWhile,
-    takeWhile: takeWhile,
-    union: union,
-    unionBy: unionBy,
-    unionWith: unionWith,
-    uniq: uniq,
-    uniqBy: uniqBy,
-    uniqWith: uniqWith,
-    unzip: unzip,
-    unzipWith: unzipWith,
-    without: without,
-    xor: xor,
-    xorBy: xorBy,
-    xorWith: xorWith,
-    zip: zip,
-    zipObject: zipObject,
-    zipObjectDeep: zipObjectDeep,
-    zipWith: zipWith,
-    countBy: countBy,
-    every: every,
-    filter: filter,
-    find: find,
-    findLast: findLast,
-    flatMap: flatMap,
-    flatMapDeep: flatMapDeep,
-    flatMapDepth: flatMapDepth,
-    forEach: forEach,
-    forEachRight: forEachRight,
-    groupBy: groupBy,
-    includes: includes,
-    invokeMap: invokeMap,
-    keyBy: keyBy,
-    map: map,
-    orderBy: orderBy,
-    partition: partition,
-    reduce: reduce,
-    reduceRight: reduceRight,
-    reject: reject,
-    sample: sample,
-    sampleSize: sampleSize,
-    shuffle: shuffle,
-    size: size,
-    some: some,
-    sortBy: sortBy,
-    defer: defer,
-    delay: delay,
-    castArray: castArray,
-    conformsTo: conformsTo,
-    eq: eq,
-    gt: gt,
-    gte: gte,
-    isArguments: isArguments,
-    isArray: isArray,
-    isArrayBuffer: isArrayBuffer,
-    isArrayLike: isArrayLike,
-    isArrayLikeObject: isArrayLikeObject,
-    isBoolean: isBoolean,
-    isDate: isDate,
-    isElement: isElement,
-    isEmpty: isEmpty,
     isEqual: isEqual,
-    isEqualWith: isEqualWith,
-    isError: isError,
-    isFinite: isFinite,
-    isFunction: isFunction,
-    isInteger: isInteger,
-    isLength: isLength,
-    isMap: isMap,
-    isMatch: isMatch,
-    isMatchWith: isMatchWith,
-    isNaN: isNaN,
-    isNative: isNative,
-    isNil: isNil,
-    isNull: isNull,
-    isNumber: isNumber,
-    isObject: isObject,
-    isObjectLike: isObjectLike,
-    isPlainObject: isPlainObject,
-    isRegExp: isRegExp,
-    isSafeInteger: isSafeInteger,
-    isSet: isSet,
-    isString: isString,
-    isSymbol: isSymbol,
-    isTypedArray: isTypedArray,
-    isUndefined: isUndefined,
-    isWeakMap: isWeakMap,
-    isWeakSet: isWeakSet,
-    lt: lt,
-    lte: lte,
-    toArray: toArray,
-    toFinite: toFinite,
-    toInteger: toInteger,
-    toLength: toLength,
-    toNumber: toNumber,
-    assign: assign,
-    toSafeInteger: toSafeInteger,
-    add: add,
-    ceil: ceil,
-    divide: divide,
-    floor: floor,
-    max: max,
-    maxBy: maxBy,
-    mean: mean,
-    meanBy: meanBy,
-    min: min,
-    minBy: minBy,
-    multiply: multiply,
-    round: round,
-    subtract: subtract,
     sum: sum,
     sumBy: sumBy,
-    clamp: clamp,
-    inRange: inRange,
-    random: random,
-    assignIn: assignIn,
-    at: at,
-    defaults: defaults,
-    defaultsDeep: defaultsDeep,
-    findKey: findKey,
-    findLastKey: findLastKey,
-    forIn: forIn,
-    forInRight: forInRight,
-    forOwn: forOwn,
-    forOwnRight: forOwnRight,
-    functions: functions,
-    functionsIn: functionsIn,
-    get: get,
-    has: has,
-    hasIn: hasIn,
-    invert: invert,
-    invertBy: invertBy,
-    invoke: invoke,
-    keys: keys,
-    keysIn: keysIn,
-    mapKeys: mapKeys,
-    mapValues: mapValues,
-    merge: merge,
-    mergeWith: mergeWith,
-    omit: omit,
-    omitBy: omitBy,
-    pick: pick,
-    pickBy: pickBy,
-    result: result,
-    set: set,
-    setWith: setWith,
-    toPairs: toPairs,
-    toPairsIn: toPairsIn,
-    transform: transform,
-    unset: unset,
-    update: update,
-    updateWith: updateWith,
-    values: values,
-    valuesIn: valuesIn,
-    camelCase: camelCase,
-    capitalize: capitalize,
-    deburr: deburr,
-    endsWith: endsWith,
-    escape: escape,
-    escapeRegExp: escapeRegExp,
-    kebabCase: kebabCase,
-    lowerCase: lowerCase,
-    lowerFirst: lowerFirst,
-    pad: pad,
-    padEnd: padEnd,
-    padStart: padStart,
-    parseInt: parseInt,
-    repeat: repeat,
-    replace: replace,
-    snakeCase: snakeCase,
-    split: split,
-    startCase: startCase,
-    startsWith: startsWith,
-    toLower: toLower,
-    toUpper: toUpper,
-    trim: trim,
-    trimEnd: trimEnd,
-    trimStart: trimStart,
-    truncate: truncate,
-    unescape: unescape,
-    upperCase: upperCase,
-    upperFirst: upperFirst,
-    words: words,
-    bindAll: bindAll,
-    defaultTo: defaultTo,
     range: range,
     rangeRight: rangeRight,
-    mixin: mixin,
-    times: times,
-    toPath: toPath,
-    uniqueId: uniqueId,
-    cloneDeep: cloneDeep,
-    identity: identity,
-    pullAt: pullAt,
-    matches: matches,
-    property: property,
-    ary: ary,
-    unary: unary,
-    negate: negate,
-    once: once,
-    spread: spread,
-    flip: flip,
-    conforms: conforms,
-    constant: constant,
-    flow: flow,
-    method: method,
-    methodOf: methodOf,
-    nthArg: nthArg,
-    propertyOf: propertyOf,
-    arrayToLinkedList: arrayToLinkedList,
-    parseJson: parseJson,
-    dellTo3355: dellTo3355,
-    isPrime: isPrime,
+    
 
   }
 
