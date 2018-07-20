@@ -372,7 +372,7 @@ var malin52045 = function(){
       for(let i in source){
         if(source[i] != obj[i]) return false
       }
-      else return true
+      return true
     }
   }
 
@@ -380,12 +380,12 @@ var malin52045 = function(){
     return function(obj){
       if(Array.isArray(path)){
         if(obj[path[0]] == value) return true
-        return false
       }
+      return false
       if(typeof path == 'string'){
         if(obj[path] == value) return true
-        return false
       }
+      return false
   }
 
   function orderBy(){}
