@@ -380,12 +380,11 @@ var malin52045 = function(){
     return function(obj){
       if(Array.isArray(path)){
         if(obj[path[0]] == value) return true
-      }
-      return false
+      }else return false
       if(typeof path == 'string'){
         if(obj[path] == value) return true
-      }
-      return false
+      }else return false
+    }
   }
 
   function orderBy(){}
@@ -553,7 +552,7 @@ var malin52045 = function(){
     after: after,
     before: before,
     matchesProperty: matchesProperty,
-    matches: matches,
+    matches: matches
     
   }
 
