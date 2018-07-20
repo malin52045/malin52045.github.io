@@ -1,21 +1,72 @@
 var malin52045 = function(){
 
+  //返回一个函数，原函数最多接受n个参数
+  function ary(func,n){
+    return function(...args){
+      return func(...args.slice(0,n))
+    }
+  }
+
+
+  function unary(func,n){
+    return ary(func,1)
+  }
+
+  function after(n,func){
+    let count = 0
+    return function(...args){
+      c++
+      if(c >= n)  return func(...args)
+    }
+  }
+
+  function before(n,func){
+    let count = 0
+    return function(...args){
+      count++
+      if(count < n) return func(...args)
+    }
+  }
+
+
+
+  //返回一个有预绑定参数的函数
+  // function bind(f,object,...fixedArgs){
+  //   return function(...args){
+  //     object.f = f
+  //     return object.f(...fixedArgs,...args)
+  //   }
+  // }
+
+  // function bind(f,object,...fixedArgs){
+  //   return function(...args){
+  //     return f.apply(object,[...fixedArgs,...args])
+  //   }
+  // }
+
+  function bind(f,object,...fixedArgs){
+    return function(...args){
+      let count = 0
+      for(let i in fixedArgs){
+        if(count >= args.length) break
+        if(fixedArgs[i] == '_'){
+          fixedArgs[i] = args[count] 
+          count++
+        } 
+      }
+      return f.apply(object,[...fixedArgs,...args])
+    }
+  }
+
+
+  function bindkey(object,key,...fixedArgs){
+    return function(...args){
+      return object[key](...fixedArgs,...args)
+    }
+  }
 
   //将数组分割为长度为size的+1维数组
-  function chunk(array,size=1) {
-    let result = []
-    let temp = []
-    for(let i = 0;i < array.length;i++){
-      let n = i % size
-      temp.push(array[i])
-      if(n == size - 1){ 
-        result.push(temp)
-        temp = []
-      }
-    }
-    if(temp[0]) result.push(temp)
-    return result
-  }
+
 
   function chunk(ary,size=1){
     let result = []
@@ -29,24 +80,6 @@ var malin52045 = function(){
 
 
   //移除数组中所有错误的值：false, null, 0, "", undefined, and NaN
-  function compact(array){
-    let result = []
-    for(let i = 0;i < array.length;i++){
-      if(array[i]) result.push(array.slice(i,1)[0])
-    }
-    return result
-  }
-
-  function compact(ary){
-    let result = []
-    ary.forEach(function(item,index){
-      if(item) result.push(ary.slice(index,1)[0])
-    })
-  }
-
-  function compact(ary){
-    return ary.filter(item => item)
-  }
   var compact = ary => ary.filter(item => item)
 
 
@@ -67,7 +100,7 @@ var malin52045 = function(){
     let result 
     for(let ary of arys){
       result = []
-      for(let i = 0;i < ary.length;i++){
+      for(let i = 0;i < temp.length;i++){
         // if(!(array1[i] in obj2)) result.push(array1[i])
         if(ary.indexOf(temp[i]) == -1) result.push(temp[i])
       }
@@ -78,83 +111,99 @@ var malin52045 = function(){
 
 
   //将数组通过第三个参数转化后 比较出不同的值，返会新的数组
-  function differenceBy(array1,array2,iteratee){
-    if(iteratee == undefined) return difference(array1,array2)
-    let nums2 = array2.slice(0)
-    let result = []
-    if(typeof iteratee == 'function'){
-      for(let i in nums2){
-        nums2[i] = iteratee(nums2[i])
-      }      
-      // let obj2 = {}
-      // for(let i in nums2){
-      //   obj2[nums2[i]] = 1
-      // }
-      for(let i in array1){
-        // if(!(iteratee(array1[i]) in obj2)) result.push(array1[i])
-        if(nums2.indexOf(iteratee(array1[i])) == -1) result.push(array1[i])
+  // function differenceBy(ary1,ary2,iterat = identity){
+  //   let result = []
+  //   for(let i in ary1){
+  //     for(var j = 0;j < ary2.length;j++){
+  //       if(iteratee(iterat)(ary1[i]) == iteratee(iterat)(ary2[j])) break      
+  //     }
+  //     if(j == ary2.length) result.push(ary1[i])
+  //   }
+  //   return result
+  // }
+
+  function differenceBy(ary1,...arys){
+    if(Array.isArray(arys[arys.length - 1])){
+      return difference(ary1,...arys)
+    }else{
+      let iterat = arys.pop()
+      let temp = ary1.slice()
+      let func = iteratee(iterat)
+
+      for(let ary of arys){
+        result = []
+        for(let i = 0;i < temp.length;i++){
+          for(var j = 0;j < ary.length; j++){
+            if(func(temp[i]) == func(ary[j])) break
+          }
+          if(j == ary.length) result.push(temp[i])
+        }
+        temp = result      
       }
+      return result
     }
-    if(typeof iteratee == 'string'){
-      for(let i in nums2){
-        nums2[i] = nums2[i][iteratee]
-      }
-      for(let i in array1){
-        if(nums2.indexOf(array1[i][iteratee]) == -1) result.push(array1[i])
-      }
-    }
-    return result
   }
 
+ 
 
-  function differenceWith(ary1,ary2,comparator){
-    return ary1.filter(function(item){
-      for(let i of ary2){
-        if(comparator(i,item)) return true
+
+
+  //ary1[i]与ary2[j]输入comparator进行比较
+  // function differenceWith(ary1,ary2,comparator){
+  //   return ary1.filter(item => !ary2.some( item2 => comparator(item,item2)))
+  // }
+
+
+  function differenceWith(ary1,...arys){
+    if(Array.isArray(arys[arys.length - 1])){
+      return difference(ary1,...arys)
+    }else{
+      let iterat = arys.pop()
+      let temp = ary1.slice()
+      let func = iteratee(iterat)
+
+      for(let ary of arys){
+        result = []
+        for(let i = 0;i < temp.length;i++){
+          for(var j = 0;j < ary.length; j++){
+            if(func(temp[i],ary[j])) break
+          }
+          if(j == ary.length) result.push(temp[i])
+        }
+        temp = result      
       }
-      return false
-    })
-  }
-
-  function differenceWith(ary1,ary2,comparator){
-    return ary1.filter(item => !ary2.some( item2 => comparator(item,item2)))
+      return result
+    }
   }
 
 
 
   //删除数组的前n项
   function drop(ary,n){
-    if(n == undefined) return ary.slice(1)
+    if(arguments.length == 1) return ary.slice(1)
     return ary.slice(n)
   }
 
 
   //删除数组的末尾n项
   function dropRight(ary,n){
+    if(n > ary.length) return []
     if(n == undefined) return ary.slice(0,ary.length - 1)
       return ary.slice(0,ary.length - n)
   }
   
 
-  //返回不满足pre条件的数组内容
-  function dropRightWhile(ary,pre){
-    let result = []
-    if(typeof pre == 'function'){
-      for(let i in ary){
-        if(!pre(ary[i])) result.push(ary[i])
-      } 
+  // 返回不满足pre条件的数组内容
+  function dropRightWhile(ary,predicate = identity){
+    for(let i = ary.length - 1;i >= 0;i--){
+      if(!iteratee(predicate)(ary[i])) return ary.slice(0,i + 1)
     }
-    if(typeof pre == 'object'){
-      for(let i in ary){
-        for(let j in ary[i]){
-          if(!((j in pre) && (ary[i][j] == pre[j]))){
-            result.push(ary[i]) 
-            break
-          }       
-        }
-      }
+  }
+
+  function dropWhile(ary,predicate = identity){
+    for(let i in ary){
+      if(!iteratee(predicate)(ary[i])) return ary.slice(i)
     }
-    return result
   }
 
 
@@ -163,11 +212,68 @@ var malin52045 = function(){
 
   function findIndex(){}
   function findLastIndex(){}
-  function flatten(){}
-  function flattenDeep(){}
-  function flattenDepth(){}
-  function fromPairs(){}
+
+
+  //展平一层
+
+
+  function flatten(ary){
+    return flattenDepth(ary,1)
+  }
+
+
+  function flattenDeep(ary){
+    return flattenDepth(ary,Infinity)
+  }
+
+
+  function flattenDepth(ary,depth){
+    if(depth == 0) return ary
+    let result = []
+    for(let item of ary){
+      if(Array.isArray(item)) {
+        let a = flattenDepth(item,depth - 1)
+        result = [...result,...a]
+      }
+      else  result.push(item)
+    }
+    return result
+  }
+
+
+  function fromPairs(pairs){
+    return pairs.reduce(function(result,item,index,ary){
+      result[item[0]] = item[1]
+      return result
+    },{})
+  }
+
+
   function head(){}
+
+  function identity(val){
+    return val
+  }
+
+  function iteratee(val){
+    if(typeof val == 'function') return val
+    if(typeof val == 'string') return function(obj){
+      return obj[val]
+    }
+    if(Array.isArray(val)) return function(obj){
+      for(let i = 0;i < val.length;i += 2){
+        if(obj[val[i]] != val[i + 1]) return false
+      }
+      return true
+    }
+    if(typeof(val) == 'object') return function(obj){
+      for(let key in val){
+        if(obj[key] != val[key]) return false
+      }
+      return true
+    }
+  }
+
   function indexOf(){}
   function initial(){}
   function intersection(){}
@@ -182,6 +288,23 @@ var malin52045 = function(){
   function pullAllBy(){}
   function pullAllWith(){}
   function reverse(){}
+
+  
+
+  function some(ary,predicate){
+    for(let item of ary){
+      if(iteratee(predicate)(item)) return true
+    }
+    return false
+  }
+
+  function every(ary,predicate){
+    for(let item of ary){
+      if(!iteratee(predicate)(item)) return false
+    }
+    return true
+  }
+
   function sortedIndex(){}
   function sortedIndexBy(){}
   function sortedIndexOf(){}
@@ -221,11 +344,50 @@ var malin52045 = function(){
   function flatMapDepth(){}
   function forEach(){}
   function forEachRight(){}
-  function groupBy(){}
+
+
+
+  // function groupBy(ary,propName){
+  //   let result = {}
+  //   for(let item of ary){
+  //     if(item[propName] in result) result[item[propName]].push(item)
+  //       else result[item[propName]] = [item]
+  //   }
+  //   return result
+  // }
+
+  var groupBy = (ary,predicate) => ary.reduce((result,item,key) => (key = iteratee(predicate)(item),key in result ? result[key].push(item) : result[key] = [item],result ),{})
+
+
+
+
+
   function includes(){}
   function invokeMap(){}
   function keyBy(){}
   function map(){}
+
+  function matches(source){
+    return function(obj){
+      for(let i in source){
+        if(source[i] != obj[i]) return false
+      }
+      else return true
+    }
+  }
+
+  function matchesProperty(path,value){
+    return function(obj){
+      if(Array.isArray(path)){
+        if(obj[path[0]] == value) return true
+        return false
+      }
+      if(typeof path == 'string'){
+        if(obj[path] == value) return true
+        return false
+      }
+  }
+
   function orderBy(){}
   function partition(){}
   function reduce(){}
@@ -287,27 +449,23 @@ var malin52045 = function(){
 
   //返回数组和
   function sum(ary){
+    return sumBy(ary)
+  }
+
+  //返回数组内某条件和
+  function sumBy(ary,iterat = identity){
     let sum = 0
     ary.forEach(function(temp){
-      sum += temp
+      sum += iteratee(iterat)(temp)      
     })
     return sum
   }
 
-  //返回数组内某条件和
-  function sumBy(ary,ident){
-    let sum = 0
-    if(arguments.length === 1) sum(ary)
-    if(typeof ident == 'function'){
-      ary.forEach(function(temp){
-        sum += ident(temp)      
-      })
-    }else if(typeof ident === 'string'){
-      ary.forEach(function(temp){
-        sum += temp[ident]
-      })
+  //返回一个函数，接受一个数组，将数组从第几项展开传入原函数
+  function spread(func,start = 0){
+    return function(ary){
+      return func.apply(null,ary.slice(start)) //func.apply(null,ary) == func(...ary)
     }
-    return sum
   }
 
   //按步骤返回start到end之间的值
@@ -375,13 +533,28 @@ var malin52045 = function(){
     drop: drop,
     dropRight: dropRight,
     dropRightWhile: dropRightWhile,
+    dropWhile: dropWhile,
+    fromPairs: fromPairs,
+    flattenDepth: flattenDepth,
     isEqual: isEqual,
+    identity: identity,
+    iteratee: iteratee,
     sum: sum,
+    some: some,
     sumBy: sumBy,
     range: range,
     rangeRight: rangeRight,
+    every: every,
+    ary: ary,
+    unary: unary,
+    bind: bind,
+    bindkey:bindkey,
+    groupBy: groupBy,
+    after: after,
+    before: before,
+    matchesProperty: matchesProperty,
+    matches: matches,
     
-
   }
 
 
