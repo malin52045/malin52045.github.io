@@ -54,7 +54,8 @@ var malin52045 = function(){
           count++
         } 
       }
-      return f.apply(object,[...fixedArgs,...args])
+      let reArgs = args.slice(count)
+      return f.apply(object,[...fixedArgs,...reArgs])
     }
   }
 
@@ -207,11 +208,24 @@ var malin52045 = function(){
   }
 
 
-  function fill(){}
+  var fill = (ary, value, start = 0, end = ary.length) => ary.map((item,index) => index >= start && index < end ? value : item)
 
 
-  function findIndex(){}
-  function findLastIndex(){}
+  var findIndex = (array, predicate = malin52045.identity, fromIndex = 0) => {
+    let general = iteratee(predicate)
+    for(let i = fromIndex;i < array.length;i++){
+      if(general(array[i])) return i
+    }
+    return -1
+  }
+
+  function findLastIndex(array, predicate = malin52045.identity, fromIndex = array.length - 1){
+    let general = iteratee(predicate)
+    for(let i = fromIndex;i >= 0;i--){
+      if(general(array[i])) return i
+    }
+    return -1
+  }
 
 
   //展平一层
@@ -248,8 +262,7 @@ var malin52045 = function(){
     },{})
   }
 
-
-  function head(){}
+  var head = ary => ary[0]
 
   function identity(val){
     return val
@@ -274,19 +287,120 @@ var malin52045 = function(){
     }
   }
 
-  function indexOf(){}
-  function initial(){}
-  function intersection(){}
-  function intersectionBy(){}
-  function intersectionWith(){}
-  function join(){}
-  function last(){}
-  function lastIndexOf(){}
-  function nth(){}
-  function pull(){}
-  function pullAll(){}
-  function pullAllBy(){}
-  function pullAllWith(){}
+  function indexOf(array, value, fromIndex = 0){
+    for(let i = fromIndex;i < array.length;i++){
+      if(array[i] === value) return i
+    }
+    return -1  
+
+  }
+
+  var initial = ary => ary.slice(0,ary.length - 1)
+
+  function intersection(...arys){
+    // let map = []
+    // for(let item of arys[0]){
+    //   if(map.indexOf(item) == -1) map.push(item)
+    // }
+
+    // for(let i = 1;i < arys.length;i++){
+    //   let temp = arys[i].slice()
+    //   map = map.filter(item => temp.indexOf(item) > -1)
+    // }
+    // return map
+    return  intersectionBy(...arys)
+  }
+
+  function intersectionBy(...args){
+    let l = args.length
+    if(!Array.isArray(args[l - 1])){
+      var act = iteratee(args[l - 1])
+      args.pop()
+    }else act = identity
+
+    let map = []
+    for(let item of args[0]){
+      let jundge = false
+      for(let addItem of map){
+        if(isEqual(item,addItem)) jundge = true
+        break
+      }
+      if(jundge == false) map.push(item)
+    }
+
+    for(let i = 1;i < args.length;i++){
+      let temp = args[i]
+      
+      map = map.filter(item => {
+        for(let comp of temp){
+          if(isEqual(act(item),act(comp))) return true
+        }
+        return false
+      })
+
+    }
+    return map
+
+  }
+
+
+  function intersectionWith(...args){
+    var act = args.pop()
+    let map = []
+    for(let item of args[0]){
+      let jundge = false
+      for(let addItem of map){
+        if(isEqual(item,addItem)) jundge = true
+        break
+      }
+      if(jundge == false) map.push(item)
+    }
+
+    for(let i = 1;i < args.length;i++){
+      let temp = args[i]
+      
+      map = map.filter(item => {
+        for(let comp of temp){
+          if(act(item,comp)) return true
+        }
+        return false
+      })
+
+    }
+    return map
+  }
+
+  var join = (ary,separator = ',') => ary.reduce((result,it) => result + separator + it)
+
+
+  var last = ary => ary[ary.length - 1]
+
+  var lastIndexOf = (array, value, fromIndex=array.length-1) => {
+    for(let i = fromIndex;i >= 0;i--){
+      if(array[i] == value) return i
+    }
+    return -1
+  }
+
+  var nth = (ary,n = 0) => n >= 0 ? ary[n] : ary[ary.length - 1]
+  
+  var pull = (ary,...vals) =>(ary = ary.filter(item => vals.every(it => it != item)),ary)
+
+  var pullAll = (ary,vals) => (ary = ary.filter(item => vals.every(it => it != item)),ary)
+
+  var pullAllBy = (ary, vals, act=identity) =>  (ary = ary.filter(item => vals.every(it => iteratee(act)(it) != iteratee(act)(item))),ary)
+
+  var pullAllWith = (ary, vals, act) =>  (ary = ary.filter(item => vals.every(it => !act(item,it))),ary)
+
+  var pullAt = (ary,...inds) => (ary = ary.filter((item,i) => flattenDeep(inds).every(it => it != i)),ary)
+
+  var remove = (ary, predicate=identity) => {
+    let removed = []
+    for(let i in ary){
+      if(predicate(ary[i])) removed = removed.concat(ary.splice(i,1))
+    }
+    return removed
+  }
   function reverse(){}
 
   
@@ -335,7 +449,6 @@ var malin52045 = function(){
   function zipObjectDeep(){}
   function zipWith(){}
   function countBy(){}
-  function every(){}
   function filter(){}
   function find(){}
   function findLast(){}
@@ -396,7 +509,6 @@ var malin52045 = function(){
   function sampleSize(){}
   function shuffle(){}
   function size(){}
-  function some(){}
   function sortBy(){}
   function defer(){}
   function delay(){}
@@ -506,11 +618,11 @@ var malin52045 = function(){
   }
 
   //返回一个与参数函数 return相反的函数
-  function negate(pre){
-    return function(...arg){
-      return !pre(...arg)
-    }
-  }
+  // function negate(pre){
+  //   return function(...arg){
+  //     return !pre(...arg)
+  //   }
+  // }
   var negate = pre => (...arg) => !pre(...arg)
 
 
@@ -534,15 +646,28 @@ var malin52045 = function(){
     dropRightWhile: dropRightWhile,
     dropWhile: dropWhile,
     fromPairs: fromPairs,
+    flattenDeep: flattenDeep,
+    flatten: flatten,
     flattenDepth: flattenDepth,
+    fill:fill,
+    findIndex:findIndex,
+    findLastIndex: findLastIndex,
     isEqual: isEqual,
     identity: identity,
     iteratee: iteratee,
-    sum: sum,
+    indexOf: indexOf,
+    initial:initial,
+    intersection: intersection,
+    intersectionBy: intersectionBy,
+    intersectionWith:intersectionWith,
+    last: last,
     some: some,
+    sum: sum,
     sumBy: sumBy,
+    spread : spread,
     range: range,
     rangeRight: rangeRight,
+    remove: remove,
     every: every,
     ary: ary,
     unary: unary,
@@ -552,8 +677,15 @@ var malin52045 = function(){
     after: after,
     before: before,
     matchesProperty: matchesProperty,
-    matches: matches
-    
+    matches: matches,
+    head : head,
+    negate : negate,
+    join: join,
+    pull: pull,
+    pullAll: pullAll,
+    pullAllBy: pullAllBy,
+    pullAllWith: pullAllWith,
+    pullAt: pullAt,
   }
 
 
