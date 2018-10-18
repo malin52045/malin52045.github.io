@@ -219,7 +219,7 @@ var malin52045 = function(){
     return -1
   }
 
-  function findLastIndex(array, predicate = malin52045.identity, fromIndex = array.length - 1){
+  var findLastIndex = (array, predicate = malin52045.identity, fromIndex = array.length - 1) => {
     let general = iteratee(predicate)
     for(let i = fromIndex;i >= 0;i--){
       if(general(array[i])) return i
@@ -228,7 +228,7 @@ var malin52045 = function(){
   }
 
 
-  //展平一层
+
 
 
   function flatten(ary){
@@ -298,16 +298,7 @@ var malin52045 = function(){
   var initial = ary => ary.slice(0,ary.length - 1)
 
   function intersection(...arys){
-    // let map = []
-    // for(let item of arys[0]){
-    //   if(map.indexOf(item) == -1) map.push(item)
-    // }
 
-    // for(let i = 1;i < arys.length;i++){
-    //   let temp = arys[i].slice()
-    //   map = map.filter(item => temp.indexOf(item) > -1)
-    // }
-    // return map
     return  intersectionBy(...arys)
   }
 
@@ -394,6 +385,107 @@ var malin52045 = function(){
 
   var pullAt = (ary,...inds) => (ary = ary.filter((item,i) => flattenDeep(inds).every(it => it != i)),ary)
 
+  var parse = function(){
+    let i = 0
+    let str
+    return function(inputstr){
+      i = 0
+      str = inputstr
+      return parseValue()
+    }
+
+
+
+    function parseValue(){
+      switch (str[i]){
+        case '{': return parseObject()
+        case '[': return parseArray()
+        case '"': return parseString()
+        case 't': return parseTrue()
+        case 'f': return parseFalse()
+        case 'n': return parseNull()
+        default : return parseNumber()
+      }
+    }
+
+    function parseString(){
+      let string = ''
+      i++
+      while(str[i] !== '"'){
+        string += str[i]
+        i++
+      }
+      i++
+      return string
+    }
+
+    function parseNumber(){
+      if(!(str[i] >= '0' && str[i] <= '9')) throw new SyntaxError(`Unexpected token ${str[i]} in JSON at position ${i}`)
+      let j = i
+      while(true){
+        let n = str[i]
+        if((n >= '0' && n <= '9') || n === '.' || n === 'e' || n === 'E' || n === '+' || n === '-'){
+          i++
+        }else break
+      }
+      let num = str.slice(j,i)
+      return parseFloat(num)
+    }
+
+    function parseTrue(){
+      let val = str.slice(i,i + 4)
+      i = i + 4
+      if(val === 'true') return true
+      throw new SyntaxError(`Unexpected token ${str[i-3]} in JSON at position ${i-3}`)
+    }
+
+    function parseFalse(){
+      let val = str.slice(i,i+5)
+      i = i + 5
+      if(val === 'false') return false
+      throw new SyntaxError(`Unexpected token ${str[i-4]} in JSON at position ${i-4}`)
+    }
+
+    function parseNull(){
+      let val = str.slice(i,i+4)
+      i = i + 4
+      if(val === 'null') return null
+      throw new SyntaxError(`Unexpected token ${str[i-3]} in JSON at position ${i-3}`)
+    }
+
+    function parseObject(){
+      let result = {}
+      i++
+      while(true){
+        let k = ''
+        i++
+        while(str[i] !== '"'){
+          k += str[i] 
+          i++
+        }
+        i += 2
+        result[k] = parseValue()
+        if(str[i] === '}') break
+        i ++
+      }
+      i++
+      return result
+    }
+
+    function parseArray(){
+      i++
+      let result = []
+      while(true){
+        result.push(parseValue())
+        if(str[i] === ']') break
+        i++
+      }
+      i++
+      return result
+    }
+  }()
+
+  
   var remove = (ary, predicate=identity) => {
     let removed = []
     for(let i in ary){
@@ -401,9 +493,25 @@ var malin52045 = function(){
     }
     return removed
   }
-  function reverse(){}
 
-  
+  var reverse = ary => {
+    let l = ary.length
+    for(let i = 0;i < l / 2;i++){
+      let temp = ary[i]
+      ary[i] = ary[l - i -1]
+      ary[l - i - 1] = temp
+    }
+    return ary
+  }
+
+  var slice = (ary, start=0, end=ary.length) => {
+    let result = []
+    for(let i = start;i < end;i++){
+      if(i in ary) result.push(ary[i])
+    }
+    return result
+  }
+
 
   function some(ary,predicate){
     for(let item of ary){
@@ -419,44 +527,348 @@ var malin52045 = function(){
     return true
   }
 
-  function sortedIndex(){}
-  function sortedIndexBy(){}
-  function sortedIndexOf(){}
-  function sortedLastIndex(){}
-  function sortedLastIndexBy(){}
-  function sortedLastIndexOf(){}
-  function sortedUniq(){}
-  function sortedUniqBy(){}
-  function tail(){}
-  function take(){}
-  function takeRight(){}
-  function takeRightWhile(){}
-  function takeWhile(){}
-  function union(){}
-  function unionBy(){}
-  function unionWith(){}
-  function uniq(){}
-  function uniqBy(){}
-  function uniqWith(){}
-  function unzip(){}
-  function unzipWith(){}
-  function without(){}
-  function xor(){}
-  function xorBy(){}
-  function xorWith(){}
-  function zip(){}
-  function zipObject(){}
-  function zipObjectDeep(){}
-  function zipWith(){}
-  function countBy(){}
-  function filter(){}
-  function find(){}
-  function findLast(){}
-  function flatMap(){}
-  function flatMapDeep(){}
-  function flatMapDepth(){}
-  function forEach(){}
-  function forEachRight(){}
+
+
+  var sortedIndex = (ary,val) => sortedIndexBy(ary,val)
+
+  var sortedIndexBy = (ary,val,act = identity) => {
+    let min = 0
+    let max = ary.length - 1
+    var act = iteratee(act)
+    while(max >= min){
+      let mid = ((max + min) / 2 | 0)
+      if(act(ary[mid]) === act(val)){
+        while(mid >= 0 && act(ary[mid]) == act(val)){
+          mid--
+        }
+        return mid + 1
+      }else if(act(ary[mid]) > act(val)) max = mid - 1
+          else min = mid + 1
+    }
+    if(act(ary[min]) > act(val)) return min
+    return min + 1
+  }
+
+  var sortedIndexOf = (ary,val) => {
+    let min = 0
+    let max = ary.length - 1
+    while(max >= min){
+      let mid = ((max + min) / 2 | 0)
+      if(ary[mid] === val){
+        while(mid >= 0 && ary[mid] == val){
+          mid--
+        }
+        return mid + 1
+      }else if(ary[mid] > val) max = mid - 1
+          else min = mid + 1
+    }
+    return -1
+  }
+
+  var sortedLastIndex = (ary,val) => sortedLastIndexBy(ary,val)
+
+  var sortedLastIndexBy = (ary,val,act = identity) => {
+    let min = 0
+    let max = ary.length - 1
+    var act = iteratee(act)
+    while(max >= min){
+      let mid = ((max + min) / 2 | 0)
+      if(act(ary[mid]) === act(val)){
+        while(mid < ary.length && act(ary[mid]) == act(val)){
+          mid++
+        }
+        return mid
+      }else if(act(ary[mid]) > act(val)) max = mid - 1
+          else min = mid + 1
+    }
+    if(act(ary[min]) > act(val)) return min
+    return min + 1
+  }
+
+  var sortedLastIndexOf = (ary,val) => {
+    let min = 0
+    let max = ary.length - 1
+    while(max >= min){
+      let mid = ((max + min) / 2 | 0)
+      if(ary[mid] === val){
+        while(mid < ary.length && ary[mid] == val){
+          mid++
+        }
+        return mid - 1
+      }else if(ary[mid] > val) max = mid - 1
+          else min = mid + 1
+    }
+    return -1
+  }
+
+  var sortedUniq = ary => sortedUniqBy(ary)
+
+  var sortedUniqBy = (ary,act = identity) => {
+    let result = []
+    let test = []
+    var act = iteratee(act)
+    ary.forEach(item => {
+      if(act(item) !== test[test.length - 1]){
+        result.push(item)
+        test.push(act(item))
+      } 
+    })
+    return result
+  }
+
+  var tail = ary => (ary.shift(),ary)
+  var take = (ary,n = 1) => ary.slice(0,n)
+  var takeRight = (ary,n = 1) => ary.slice(ary.length - n)
+  var takeRightWhile = (ary,pre = identity) => {
+    let result = []
+    let act = iteratee(pre)
+    for(let i = ary.length - 1;i >= 0;i--){
+      if(act(ary[i])) result.push(ary[i])
+        else break
+    }
+    return result
+  }
+  var takeWhile = (ary,pre = identity) => {
+    let result = []
+    let act = iteratee(pre)
+    for(let i = 0;i < ary.length;i++){
+      if(act(ary[i])) result.push(ary[i])
+        else break
+    }
+    return result
+  }
+  var union = (...arys) => {
+    let result = []
+    arys.forEach(ary => ary.forEach(it =>{
+      if(!includes(result,it)) result.push(it)
+    }))
+    return result
+  }
+  var unionBy = (...args) =>{
+    if(!Array.isArray(args[args.length - 1])) var act = iteratee(args.pop())
+      else var act = identity
+    let result = []
+    args.forEach(arg => arg.forEach(it => {
+      var jundge = true
+      for(let i = 0;i < result.length;i++){
+        if(act(it) === act(result[i])){
+          jundge = false
+          break
+        }
+      }
+      if(jundge) result.push(it)
+    }))
+    return result
+  }
+
+  var unionWith = (...args) =>{
+    if(!Array.isArray(args[args.length - 1])) var act = iteratee(args.pop())
+      else var act = isEqual
+    let result = []
+    args.forEach(arg => arg.forEach(it => {
+      var jundge = true
+      for(let i = 0;i < result.length;i++){
+        if(act(it,result[i])){
+          jundge = false
+          break
+        }
+      }
+      if(jundge) result.push(it)
+    }))
+    return result
+  }
+
+  var uniq = ary => {
+    let result = []
+    ary.forEach(item => {
+      if(!includes(result,item)) result.push(item)
+    })
+    return result
+  }
+
+
+  var uniqBy = (ary,act = identity) => {
+    let result = []
+    let test = []
+    var act = iteratee(act)
+    ary.forEach(item => {
+      if(!includes(test,act(item))){
+        result.push(item)
+        test.push(act(item))
+      } 
+    }) 
+    return result
+  }
+
+  var uniqWith = (ary,comparator) => {
+    let result = []
+    for(let i = 0;i < ary.length;i++){
+      let jundge = true
+      for(let j = 0;j < result.length;j++){
+        if(comparator(ary[i],result[j])){
+          jundge = false
+          break
+        } 
+      }
+      if(jundge) result.push(ary[i])
+    }
+    return result 
+  }
+
+  var unzip = ary => ary[0].map((_,index) => ary.reduce((result,item) => result.concat(item[index]),[]))
+
+  var unzipWith = (ary,iterat) => ary[0].map((_,index) => ary.reduce((result,item) => iterat(result,item[index])))
+
+  var without = (ary,...nums) => ary.filter(it => !nums.includes(it)) 
+
+  var xor = (...arys) => arys.reduce((result,item) => {
+    item.forEach(it => {
+      let i = result.indexOf(it)
+      if(i == -1) result.push(it)
+        else delete result[i]
+    })
+    return result
+  },[]).filter(it => it)
+
+  var xorBy = (...args) => {
+    if(!Array.isArray(args[args.length - 1])) var act = iteratee(args.pop())
+      else var act = identity
+    let test = []
+    let result = []
+    args.forEach(item => {
+      item.forEach(it => {
+        let i = test.indexOf(act(it))
+        if(i == -1){
+          result.push(it)
+          test.push(act(it))
+        }else{
+          delete result[i]
+        }
+      })
+    })
+    return result.filter(it => it)
+  } 
+
+  var xorWith = (...args) =>{
+    var comparator = iteratee(args.pop())
+    return args.reduce((result,item) => {
+      item.forEach(it => {
+        for(var i in result){
+          let val = result[i]
+          if(comparator(val,it)){
+            delete result[i]
+            break
+          }
+        }
+        if(i == result.length - 1) result.push(it)
+      })
+      return result
+    }).filter(it => it)
+  } 
+
+  var zip = (...arys) => arys[0].slice().map((item,index,ary) => item = arys.reduce((temp,it) => (temp.push(it[index]),temp),[])) 
+ 
+  var zipObjectDeep = (props,values) => {
+    //let separa = props.map(item => item.split('.').map(it => it.match(/\w+/g)))
+    let separa = props.map(item => item.match(/\w+/g))
+
+    return separa.reduce((result,item,index) => pathJoin(item,values[index],result),{})
+
+    function  pathJoin(ary,val,otherAry = {}){
+      let temp = otherAry
+      for(let i = 0;i < ary.length;i++){
+        if(ary[i+1] === undefined){
+          if(ary[i] === undefined) temp[ary[i]] = {}
+          temp[ary[i]] = val
+        }else if(isNaN(ary[i+1])) {        
+          if(temp[ary[i]] === undefined) temp[ary[i]] = {}
+          temp = temp[ary[i]] 
+        }else{
+          if(temp[ary[i]] === undefined) temp[ary[i]] = []
+          temp = temp[ary[i]]
+        }
+      }
+      return otherAry
+    }
+  }
+
+
+  var zipWith = (...args) => {
+    let comparator = args.pop()
+    let argL = args.length
+    let l = args[0].length
+    let result = []
+    for(let i = 0;i< l;i++){
+      let nums = new Array(argL).fill(0).map((it,index) => args[index][i])
+      result.push(comparator(...nums))
+    }
+    return result
+  } 
+
+  var countBy = (collection,iterat) => {
+    let act = iteratee(iterat)
+    return collection.reduce((result,item,index) =>{
+      let val = act(item)
+      result.hasOwnProperty(val) ? result[val]++:result[val] = 1
+      return result
+    },({}))
+  } 
+
+
+  var filter = (collection,predicate = identity) => {
+    let act = iteratee(predicate)
+    let result
+    if(Array.isArray(collection)){
+      result = []
+      for(let val of collection){
+        if(act(val)) result.push(val)
+      }
+    }
+      else{
+        result = {}
+        for(let key in collection){
+          let val = collection(key)
+          if(act(val)) result[key] = val
+        }
+      } 
+    return result
+  } 
+
+  var find = (collection, predicate=_.identity, fromIndex=0) => {
+    let l = collection.length
+    let act = iteratee(predicate)
+    for(let i = fromIndex;i < l;i++){
+      let val = collection[i]
+      if(act(val)) return val
+    }
+  } 
+
+  var findLast = (collection, predicate = malin52045.identity, fromIndex = collection.length - 1) => {
+    let general = iteratee(predicate)
+    for(let i = fromIndex;i >= 0;i--){
+      let val = collection[i]
+      if(general(val)) return val
+    }
+  }
+
+  var flatMap = (collection, iteratee=identity) => flatMapDepth(collection, iteratee,1)
+
+  var flatMapDeep = (collection, iteratee=identity) => flatMapDepth(collection,iteratee,Infinity) 
+
+  var flatMapDepth = (collection, iteratee=identity,depth = 1) => flattenDepth(collection.map(item => iteratee(item)),depth) 
+
+  var forEach = (collection,iteratee = identity) => {
+    for(let i in collection){
+      iteratee(collection[i],i,collection)
+    }
+  } 
+
+  var forEachRight = (collection,iteratee = identity) => {
+    let l = collection.length
+    for(let i = l - 1;i >= 0;i--){
+      iteratee(collection[i],i,collection)
+    }
+  } 
 
 
 
@@ -475,7 +887,25 @@ var malin52045 = function(){
 
 
 
-  function includes(){}
+  var includes = (collection, value, fromIndex=0) => {
+    var values = Object.values(collection)
+      if(fromIndex >= 0){
+        for(let i = fromIndex;i < values.length;i++){
+          if(value !== value && values[i] !== values[i]) return true
+          if(value === values[i]) return true
+        }
+      }else{
+        for(let i = values.length + fromIndex;i < values.length;i++){
+          if(value !== value && values[i] !== values[i]) return true
+          if(value === values[i]) return true
+        }
+      }
+      return false
+    
+  }
+
+
+
   function invokeMap(){}
   function keyBy(){}
   function map(){}
@@ -517,15 +947,42 @@ var malin52045 = function(){
   function eq(){}
   function gt(){}
   function gte(){}
-  function isArguments(){}
-  function isArray(){}
-  function isArrayBuffer(){}
-  function isArrayLike(){}
-  function isArrayLikeObject(){}
-  function isBoolean(){}
-  function isDate(){}
-  function isElement(){}
-  function isEmpty(){}
+
+
+
+  var isArguments = obj => Object.prototype.toSting.call(obj) === '[object Arguments]'
+  
+  var isArray = val => Object.prototype.toString.call(val) ==='[object Array]'
+
+  var isArrayBuffer = val =>{}
+
+  var isArrayLike = val => {
+    if(Object.prototype.toString.call(val) === '[object String]' || Object.prototype.toString.call(val) ==='[object Array]') return true
+    if(length in val || val.length === 0) return true
+    return false
+   }
+
+  var isArrayLikeObject = val => {
+    if(typeof val === 'object' && val !== null && (length in val || val.length === 0)) return true
+      return false
+  }
+
+  var isBoolean = val => Object.prototype.toString.call(val) === '[object Boolean]' 
+
+  var isBUffer = val => val.__proto__.constructor === BUffer
+
+  var isDate = val => val.__proto__.constructor === Date
+
+  var isElement = val => Object.prototype.toString.call(val).slice(0,12) === '[object HTML'
+
+  var isEmpty = val => {
+    if(Object.prototype.toString.call(val) === '[object Object]' && Object.keys(val) === 0) return true
+    if(isArrayLike(val)) return true
+    if(Object.prototype.toString.call(val) === '[object Set]' || Object.prototype.toString.call(val) === '[object Map]'){
+      if(val.size === 0) return true
+    }
+    return false
+  }
 
 
   function isEqual(val1,val2){
@@ -652,10 +1109,20 @@ var malin52045 = function(){
     fill:fill,
     findIndex:findIndex,
     findLastIndex: findLastIndex,
+    isArguments: isArguments,
+    isArray: isArray,
+    isArrayBuffer: isArrayBuffer,
+    isArrayLike: isArrayLike,
+    isArrayLikeObject: isArrayLikeObject,
+    isBoolean: isBoolean,
+    isBUffer: isBUffer,
+    isDate: isDate,
+    isElement: isElement,
     isEqual: isEqual,
     identity: identity,
     iteratee: iteratee,
     indexOf: indexOf,
+    includes: includes,
     initial:initial,
     intersection: intersection,
     intersectionBy: intersectionBy,
@@ -665,12 +1132,34 @@ var malin52045 = function(){
     sum: sum,
     sumBy: sumBy,
     spread : spread,
+    sortedIndex: sortedIndex,
+    sortedIndexBy: sortedIndexBy,
+    sortedLastIndex: sortedLastIndex,
+    sortedLastIndexBy: sortedLastIndexBy,
+    sortedLastIndexOf: sortedLastIndexOf,
+    sortedUniq: sortedUniq,
+    sortedUniqBy: sortedUniqBy,
     range: range,
     rangeRight: rangeRight,
     remove: remove,
+    reverse:reverse,
     every: every,
     ary: ary,
     unary: unary,
+    uniq: uniq,
+    uniqBy: uniqBy,
+    uniqWith: uniqWith,
+
+    tail: tail,
+    take: take,
+    takeRight: takeRight,
+    takeRightWhile: takeRightWhile,
+    takeWhile: takeWhile,
+    union: union,
+    unionBy: unionBy,
+    unionWith: unionWith,
+
+
     bind: bind,
     bindkey:bindkey,
     groupBy: groupBy,
@@ -686,6 +1175,25 @@ var malin52045 = function(){
     pullAllBy: pullAllBy,
     pullAllWith: pullAllWith,
     pullAt: pullAt,
+    parse: parse,
+    zip:zip,
+    zipObjectDeep:zipObjectDeep,
+    zipWith:zipWith,
+    unzip:unzip,
+    unzipWith:unzipWith,
+    without:without,
+    xor:xor,
+    xorBy:xorBy,
+    xorWith:xorWith,
+    countBy:countBy,
+    filter:filter,
+    find:find,
+    findLast:findLast,
+    flatMapDepth:flatMapDepth,
+    flatMapDeep:flatMapDeep,
+    flatMap:flatMap,
+    forEach:forEach,
+    forEachRight:forEachRight,
   }
 
 
